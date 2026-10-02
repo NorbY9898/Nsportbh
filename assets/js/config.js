@@ -21,7 +21,8 @@ export const STORE_CONFIG = Object.freeze({
   domain: "https://nsport.ro",
   formBackend: Object.freeze({
     provider: "formspree",
-    endpoint: ""
+    endpoint: "https://formspree.io/f/xyezarzg",
+    configured: true
   }),
   shipping: Object.freeze({
     enabled: true,
@@ -55,6 +56,8 @@ export const COUNTRIES = Object.freeze([
 ]);
 
 export const isFormBackendConfigured = () =>
+  STORE_CONFIG.formBackend.provider === "formspree" &&
+  STORE_CONFIG.formBackend.configured === true &&
   /^https:\/\/formspree\.io\/f\/[a-z0-9]+$/i.test(STORE_CONFIG.formBackend.endpoint);
 
 export const formatMoney = (value) =>

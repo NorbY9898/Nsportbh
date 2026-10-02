@@ -14,12 +14,20 @@ export async function submitOrder(payload, signal) {
     error.code = "NOT_CONFIGURED";
     throw error;
   }
-  const response = await fetch(STORE_CONFIG.formBackend.endpoint, {
-    method: "POST",
-    headers: { Accept: "application/json" },
-    body: toFormData(payload),
-    signal
-  });
+  let response;
+  try {
+    response = await fetch(STORE_CONFIG.formBackend.endpoint, {
+      method: "POST",
+      headers: { Accept: "application/json" },
+      body: toFormData(payload),
+      signal
+    });
+  } catch (cause) {
+    const error = new Error("Comanda nu a putut fi trimisă. Verifică conexiunea și încearcă din nou.");
+    error.code = "NETWORK_ERROR";
+    error.cause = cause;
+    throw error;
+  }
   if (!response.ok) {
     let message = "Comanda nu a putut fi trimisă.";
     try {

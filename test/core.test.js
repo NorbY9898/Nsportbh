@@ -50,3 +50,34 @@ test("payload-ul include câmpurile de comandă și nu inventează prețuri", ()
   assert.equal(payload.terms_accepted, "DA");
   assert.match(payload._subject, /NSJ-20261002-A7K4/);
 });
+
+test("payload-ul de club include toate datele tuturor sportivilor", () => {
+  const clubOrder = {
+    ...baseOrder,
+    clubOrder: true,
+    clubName: "CSM Oradea",
+    clubContact: "Antrenor Test",
+    notes: "Livrare după confirmare.",
+    items: [
+      { productName: "Backnumber Judo personalizat", athleteName: "POPESCU", country: "România", countryCode: "ROU", sizeLabel: "30 × 30 cm", quantity: 2, unitPrice: 50, subtotal: 100 },
+      { productName: "Backnumber Judo personalizat", athleteName: "KOVÁCS", country: "Ungaria", countryCode: "HUN", sizeLabel: "25 × 25 cm", quantity: 1, unitPrice: 45, subtotal: 45 }
+    ],
+    subtotal: 145,
+    total: 145
+  };
+  const payload = toBackendPayload(clubOrder);
+
+  assert.equal(payload.club_order, "DA");
+  assert.equal(payload.club_name, "CSM Oradea");
+  assert.equal(payload.club_contact, "Antrenor Test");
+  assert.equal(payload.quantity, 3);
+  assert.equal(payload.items.length, 2);
+  assert.equal(payload.athletes.length, 2);
+  assert.deepEqual(payload.athletes.map((athlete) => athlete.name), ["POPESCU", "KOVÁCS"]);
+  assert.equal(payload.athletes[1].size, "25 × 25 cm");
+  assert.equal(payload.athletes[1].unit_price, 45);
+  assert.equal(payload.notes, "Livrare după confirmare.");
+  assert.match(payload.message, /POPESCU/);
+  assert.match(payload.message, /KOVÁCS/);
+  assert.match(payload.message, /Stradă: Republicii/);
+});

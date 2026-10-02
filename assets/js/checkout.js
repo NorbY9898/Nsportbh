@@ -67,7 +67,7 @@ export function validateCheckout(order) {
 const show = (value) => value || "—";
 
 export function buildEmailBody(order) {
-  const athletes = order.items.map((item, index) => `${index + 1}. ${item.athleteName} — ${item.countryCode} — ${item.sizeLabel} — ${item.quantity} buc.`).join("\n");
+  const athletes = order.items.map((item, index) => `${index + 1}. ${item.athleteName} — ${item.countryCode} — ${item.sizeLabel} — ${item.quantity} buc. — Preț unitar: ${formatMoney(item.unitPrice)} — Subtotal: ${formatMoney(item.subtotal)}`).join("\n");
   return `================================\nNSPORT × FR JUDO\nCOMANDĂ NOUĂ\n================================\n\nReferință: ${order.orderId}\nData: ${order.orderDate}\n\nPRODUS\nBacknumber Judo personalizat\n\nSPORTIVI\n${athletes}\n\n---\nPREȚ\nSubtotal: ${formatMoney(order.subtotal)}\nTransport: ${formatMoney(order.shipping)}\nTOTAL: ${formatMoney(order.total)}\n\n---\nCLIENT\nNume: ${show(order.customerName)}\nTelefon: ${show(order.customerPhone)}\nE-mail: ${show(order.customerEmail)}\n\n---\nLIVRARE\nJudeț: ${show(order.county)}\nLocalitate: ${show(order.city)}\nStradă: ${show(order.street)}\nNumăr: ${show(order.streetNumber)}\nBloc: ${show(order.building)}\nScară: ${show(order.staircase)}\nApartament: ${show(order.apartment)}\nCod poștal: ${show(order.postalCode)}\n\n---\nFACTURARE\nTip: ${order.billingType === "persoana_juridica" ? "Persoană juridică" : "Persoană fizică"}\nAceeași adresă: ${order.billingSame ? "DA" : "NU"}\nCompanie: ${show(order.companyName)}\nCUI: ${show(order.companyCui)}\nRegistrul Comerțului: ${show(order.companyTradeRegister)}\nAdresă: ${show(order.billingAddress)}\nJudeț: ${show(order.billingCounty)}\nLocalitate: ${show(order.billingCity)}\n\n---\nCLUB\nComandă club: ${order.clubOrder ? "DA" : "NU"}\nClub: ${show(order.clubName)}\nContact club: ${show(order.clubContact)}\n\nOBSERVAȚII\n${show(order.notes)}\n\n================================\nTermeni acceptați: ${order.termsAccepted ? "DA" : "NU"}\nPersonalizare confirmată: ${order.personalizationConfirmed ? "DA" : "NU"}\n================================`;
 }
 
@@ -110,7 +110,26 @@ export function toBackendPayload(order) {
     billing_city: order.billingCity,
     club_order: order.clubOrder ? "DA" : "NU",
     club_name: order.clubName,
-    athletes: order.items.map((item) => ({ name: item.athleteName, country: item.country, code: item.countryCode, size: item.sizeLabel, quantity: item.quantity })),
+    items: order.items.map((item) => ({
+      product_name: item.productName || "Backnumber Judo personalizat",
+      athlete_name: item.athleteName,
+      country: item.country,
+      country_code: item.countryCode,
+      size: item.sizeLabel,
+      quantity: item.quantity,
+      unit_price: item.unitPrice ?? "Preț la cerere",
+      subtotal: item.subtotal ?? "Preț la cerere"
+    })),
+    athletes: order.items.map((item) => ({
+      name: item.athleteName,
+      country: item.country,
+      code: item.countryCode,
+      size: item.sizeLabel,
+      quantity: item.quantity,
+      unit_price: item.unitPrice ?? "Preț la cerere",
+      subtotal: item.subtotal ?? "Preț la cerere"
+    })),
+    club_contact: order.clubContact,
     notes: order.notes,
     terms_accepted: order.termsAccepted ? "DA" : "NU",
     personalization_confirmed: order.personalizationConfirmed ? "DA" : "NU",

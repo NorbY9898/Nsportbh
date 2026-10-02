@@ -2,7 +2,7 @@
 
 Microsite e-commerce static, mobile-first, în limba română, pregătit pentru GitHub Pages. Include configurator live, coș în `localStorage`, comenzi individuale și de club, checkout, Formspree și fallback WhatsApp.
 
-> Site-ul este funcțional fără build. Pentru lansare sunt obligatorii configurarea prețurilor, datelor juridice, transportului și endpoint-ului Formspree.
+> Site-ul este funcțional fără build. Endpoint-ul Formspree este configurat; pentru lansare mai sunt obligatorii testarea unei comenzi reale, configurarea prețurilor, datelor juridice și transportului.
 
 ## Rulare locală
 
@@ -61,7 +61,7 @@ Modifică `orderEmail`. Pentru primirea comenzilor, destinatarul se configureaz�
 
 ### Formspree
 
-Urmează pașii din [`EMAIL-SETUP.md`](EMAIL-SETUP.md). Este necesară schimbarea unei singure valori: `formBackend.endpoint`. Starea „configurat” este derivată automat din endpoint; nu există un al doilea comutator care poate rămâne greșit.
+Endpoint-ul `https://formspree.io/f/xyezarzg` este setat, iar `configured` este `true`. Urmează pașii de testare din [`EMAIL-SETUP.md`](EMAIL-SETUP.md) și verifică primirea reală la adresa configurată în panoul Formspree.
 
 ### Transport
 

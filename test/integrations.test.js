@@ -1,10 +1,54 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { submitOrder } from "../assets/js/form-backend.js";
+import { STORE_CONFIG, isFormBackendConfigured } from "../assets/js/config.js";
 import { buildWhatsAppMessage, getWhatsAppUrl } from "../assets/js/whatsapp-order.js";
 
-test("backend-ul neconfigurat refuză trimiterea reală", async () => {
-  await assert.rejects(() => submitOrder({}), (error) => error.code === "NOT_CONFIGURED" && /temporar indisponibilă/.test(error.message));
+test("Formspree este configurat cu endpoint-ul furnizat", () => {
+  assert.equal(STORE_CONFIG.formBackend.provider, "formspree");
+  assert.equal(STORE_CONFIG.formBackend.endpoint, "https://formspree.io/f/xyezarzg");
+  assert.equal(STORE_CONFIG.formBackend.configured, true);
+  assert.equal(isFormBackendConfigured(), true);
+});
+
+test("trimite POST real către endpoint și rezolvă numai la răspuns pozitiv", async () => {
+  const originalFetch = globalThis.fetch;
+  let request;
+  globalThis.fetch = async (url, options) => {
+    request = { url, options };
+    return { ok: true, json: async () => ({ next: "/mulțumim" }) };
+  };
+  try {
+    const result = await submitOrder({ order_id: "NSJ-20261002-A7K4", customer_email: "test@example.ro", athletes: [{ name: "POPESCU" }] });
+    assert.equal(request.url, "https://formspree.io/f/xyezarzg");
+    assert.equal(request.options.method, "POST");
+    assert.equal(request.options.headers.Accept, "application/json");
+    assert.equal(request.options.body.get("order_id"), "NSJ-20261002-A7K4");
+    assert.match(request.options.body.get("athletes"), /POPESCU/);
+    assert.equal(result.next, "/mulțumim");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("răspunsul Formspree nereușit produce eroare", async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => ({ ok: false, json: async () => ({ errors: [{ message: "Formular respins" }] }) });
+  try {
+    await assert.rejects(() => submitOrder({ order_id: "NSJ-TEST" }), (error) => error.code === "BACKEND_ERROR" && error.message === "Formular respins");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("eroarea de rețea este raportată în română", async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => { throw new TypeError("Failed to fetch"); };
+  try {
+    await assert.rejects(() => submitOrder({ order_id: "NSJ-TEST" }), (error) => error.code === "NETWORK_ERROR" && /nu a putut fi trimisă/.test(error.message));
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });
 
 test("mesajul WhatsApp include toți sportivii și este codat corect", () => {

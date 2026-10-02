@@ -44,7 +44,16 @@ test("pagina principală nu conține ID-uri duplicate", () => {
   assert.deepEqual([...new Set(duplicates)], []);
 });
 
-test("configurația nu conține un endpoint Formspree inventat", () => {
+test("configurația conține endpoint-ul Formspree furnizat și este activă", () => {
   const config = readFileSync(resolve(root, "assets/js/config.js"), "utf8");
-  assert.match(config, /endpoint:\s*""/);
+  assert.match(config, /endpoint:\s*"https:\/\/formspree\.io\/f\/xyezarzg"/);
+  assert.match(config, /configured:\s*true/);
+});
+
+test("fluxul de submit are blocare internă pentru trimitere dublă", () => {
+  const app = readFileSync(resolve(root, "assets/js/app.js"), "utf8");
+  assert.match(app, /let submissionInProgress = false/);
+  assert.match(app, /if \(submissionInProgress\) return/);
+  assert.match(app, /submissionInProgress = true/);
+  assert.match(app, /submissionInProgress = false/);
 });

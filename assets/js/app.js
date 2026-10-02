@@ -14,6 +14,7 @@ const text = (tag, value, className) => { const element = document.createElement
 let selectedSize = "30x30";
 let editingId = null;
 let currentOrderId = generateOrderId();
+let submissionInProgress = false;
 
 function toast(message, type = "info") {
   const region = $("#toast-region");
@@ -200,6 +201,7 @@ function showOrderState(kind, order, message) {
 
 async function handleSubmit(event) {
   event.preventDefault();
+  if (submissionInProgress) return;
   const form = event.currentTarget;
   const order = serializeCheckout(form, getCart(), cartTotals(), currentOrderId);
   const validation = validateCheckout(order);
@@ -207,6 +209,7 @@ async function handleSubmit(event) {
   if (order.honeypot) return;
   const button = $("#submit-order");
   if (button.disabled) return;
+  submissionInProgress = true;
   button.disabled = true; button.classList.add("is-loading"); button.querySelector("span").textContent = "Se trimite comanda...";
   try {
     await submitOrder(toBackendPayload(order));
@@ -215,6 +218,7 @@ async function handleSubmit(event) {
   } catch (error) {
     showOrderState("error", order, error.message || "A apărut o eroare de rețea.");
   } finally {
+    submissionInProgress = false;
     button.disabled = false; button.classList.remove("is-loading"); button.querySelector("span").textContent = "Trimite comanda";
   }
 }

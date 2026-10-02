@@ -23,16 +23,19 @@ Surse oficiale verificate:
    ```
 
 6. Deschide `assets/js/config.js`.
-7. Găsește exact această linie:
+7. Verifică exact aceste linii:
 
    ```js
-   endpoint: ""
+   provider: "formspree",
+   endpoint: "https://formspree.io/f/xyezarzg",
+   configured: true
    ```
 
-8. Schimbă **o singură valoare**:
+8. Dacă endpoint-ul se schimbă ulterior, actualizează valoarea și păstrează integrarea activă:
 
    ```js
-   endpoint: "https://formspree.io/f/ID-UL-TAU-REAL"
+   endpoint: "https://formspree.io/f/xyezarzg",
+   configured: true
    ```
 
 9. Publică site-ul.

@@ -22,8 +22,8 @@ Nu publica magazinul ca flux comercial activ până când toate elementele oblig
 
 ## Formulare și comenzi
 
-- [ ] Form backend creat
-- [ ] Form endpoint introdus
+- [x] Form backend creat
+- [x] Form endpoint introdus
 - [ ] Formular testat real
 - [ ] E-mail primit real
 - [ ] Destinatar Formspree setat la nsportoradeabh@yahoo.com
