@@ -15,10 +15,24 @@ test("respinge numele gol, dimensiunea lipsă și cantitatea invalidă", () => {
   assert.equal(result.errors.length, 3);
 });
 
+test("acceptă exact cele patru dimensiuni finale", () => {
+  const expected = new Map([
+    ["20x20", "20 × 20 cm"],
+    ["30x30", "30 × 30 cm"],
+    ["35x35", "35 × 35 cm"],
+    ["40x40", "40 × 40 cm"]
+  ]);
+  expected.forEach((label, size) => {
+    const product = createProduct({ athleteName: "Popescu", country: "România", countryCode: "ROU", size, quantity: 1 });
+    assert.equal(product.sizeLabel, label);
+  });
+  assert.equal(validateProduct({ athleteName: "Popescu", size: "25x25", quantity: 1 }).valid, false);
+});
+
 test("creează produs fără preț inventat", () => {
-  const product = createProduct({ athleteName: "Marin", country: "România", countryCode: "ROU", size: "25x25", quantity: 2 });
+  const product = createProduct({ athleteName: "Marin", country: "România", countryCode: "ROU", size: "35x35", quantity: 2 });
   assert.equal(product.athleteName, "MARIN");
-  assert.equal(product.sizeLabel, "25 × 25 cm");
+  assert.equal(product.sizeLabel, "35 × 35 cm");
   assert.equal(product.unitPrice, null);
   assert.equal(product.subtotal, null);
 });
@@ -43,6 +57,13 @@ test("validează checkout complet și blochează acordurile nebifate", () => {
   assert.equal(invalid.errors.length, 2);
 });
 
+test("checkout-ul respinge o dimensiune localStorage veche", () => {
+  const legacyOrder = { ...baseOrder, items: [{ ...baseOrder.items[0], sizeLabel: "25 × 25 cm" }] };
+  const result = validateCheckout(legacyOrder);
+  assert.equal(result.valid, false);
+  assert.match(result.errors[0], /dimensiunea/);
+});
+
 test("payload-ul include câmpurile de comandă și nu inventează prețuri", () => {
   const payload = toBackendPayload(baseOrder);
   assert.equal(payload.order_id, baseOrder.orderId);
@@ -60,7 +81,7 @@ test("payload-ul de club include toate datele tuturor sportivilor", () => {
     notes: "Livrare după confirmare.",
     items: [
       { productName: "Backnumber Judo personalizat", athleteName: "POPESCU", country: "România", countryCode: "ROU", sizeLabel: "30 × 30 cm", quantity: 2, unitPrice: 50, subtotal: 100 },
-      { productName: "Backnumber Judo personalizat", athleteName: "KOVÁCS", country: "Ungaria", countryCode: "HUN", sizeLabel: "25 × 25 cm", quantity: 1, unitPrice: 45, subtotal: 45 }
+      { productName: "Backnumber Judo personalizat", athleteName: "KOVÁCS", country: "Ungaria", countryCode: "HUN", sizeLabel: "35 × 35 cm", quantity: 1, unitPrice: 45, subtotal: 45 }
     ],
     subtotal: 145,
     total: 145
@@ -74,7 +95,7 @@ test("payload-ul de club include toate datele tuturor sportivilor", () => {
   assert.equal(payload.items.length, 2);
   assert.equal(payload.athletes.length, 2);
   assert.deepEqual(payload.athletes.map((athlete) => athlete.name), ["POPESCU", "KOVÁCS"]);
-  assert.equal(payload.athletes[1].size, "25 × 25 cm");
+  assert.equal(payload.athletes[1].size, "35 × 35 cm");
   assert.equal(payload.athletes[1].unit_price, 45);
   assert.equal(payload.notes, "Livrare după confirmare.");
   assert.match(payload.message, /POPESCU/);

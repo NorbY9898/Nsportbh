@@ -7,6 +7,7 @@ import { submitOrder } from "./form-backend.js";
 import { getWhatsAppUrl } from "./whatsapp-order.js";
 import { initCookieConsent } from "./cookies.js";
 import { initAnimations } from "./animations.js";
+import { createBacknumberElement, hydrateBacknumbers, updateBacknumber } from "./backnumber-renderer.js";
 
 const $ = (selector, parent = document) => parent.querySelector(selector);
 const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
@@ -46,6 +47,7 @@ function setSize(size) {
   });
   $("#selected-size-label").textContent = PRODUCT_CONFIG.sizes[size].label;
   $("#product-price").textContent = formatMoney(PRODUCT_CONFIG.sizes[size].price);
+  updateBacknumber($("#live-backnumber"), { athleteName: $("#athlete-name").value, countryCode: $("#country").selectedOptions[0]?.dataset.code, size: PRODUCT_CONFIG.sizes[size].label });
 }
 
 function currentProductInput() {
@@ -86,7 +88,14 @@ function renderCart(items) {
     const card = document.createElement("article");
     card.className = "cart-item";
     const details = document.createElement("div");
-    details.append(text("strong", item.athleteName), text("span", `${item.countryCode} · ${item.sizeLabel}`, "muted"), text("span", formatMoney(item.subtotal), "price-small"));
+    details.className = "cart-item__summary";
+    details.append(
+      createBacknumberElement({ athleteName: item.athleteName, countryCode: item.countryCode, size: item.sizeLabel }, "backnumber-visual--mini"),
+      text("strong", item.athleteName),
+      text("span", `${item.country} / ${item.countryCode}`, "muted"),
+      text("span", `${item.sizeLabel} · ${item.quantity} buc.`, "muted"),
+      text("span", `${formatMoney(item.unitPrice)} · Subtotal: ${formatMoney(item.subtotal)}`, "price-small")
+    );
     const controls = document.createElement("div");
     controls.className = "cart-item__controls";
     const minus = text("button", "−", "icon-button");
@@ -131,7 +140,15 @@ function editProduct(item) {
 function renderClubRoster(items) {
   const list = $("#club-roster");
   list.replaceChildren();
-  items.forEach((item, index) => list.append(text("li", `${index + 1}. ${item.athleteName} — ${item.countryCode} — ${item.sizeLabel} — ${item.quantity} buc.`)));
+  items.forEach((item, index) => {
+    const row = document.createElement("li");
+    row.className = "club-roster__item";
+    row.append(
+      createBacknumberElement({ athleteName: item.athleteName, countryCode: item.countryCode, size: item.sizeLabel }, "backnumber-visual--micro"),
+      text("span", `${index + 1}. ${item.athleteName} — ${item.countryCode} — ${item.sizeLabel} — ${item.quantity} buc.`)
+    );
+    list.append(row);
+  });
   $("#club-roster-empty").hidden = items.length > 0;
 }
 
@@ -141,7 +158,15 @@ function closeCart() { $("#cart-drawer").classList.remove("is-open"); $("#cart-b
 function renderRecap() {
   const recap = $("#checkout-recap");
   recap.replaceChildren();
-  getCart().forEach((item) => recap.append(text("li", `${item.athleteName} · ${item.countryCode} · ${item.sizeLabel} · ${item.quantity} buc.`)));
+  getCart().forEach((item) => {
+    const row = document.createElement("li");
+    row.className = "checkout-recap-item";
+    row.append(
+      createBacknumberElement({ athleteName: item.athleteName, countryCode: item.countryCode, size: item.sizeLabel }, "backnumber-visual--micro"),
+      text("span", `${item.athleteName} · ${item.country} / ${item.countryCode} · ${item.sizeLabel} · ${item.quantity} buc.`)
+    );
+    recap.append(row);
+  });
   $("#checkout-reference").textContent = currentOrderId;
   const totals = cartTotals();
   $("#checkout-subtotal").textContent = formatMoney(totals.subtotal);
@@ -276,7 +301,8 @@ function initPayments() {
 
 function init() {
   populateCountries();
-  initPreview({ input: $("#athlete-name"), countrySelect: $("#country"), nameOutput: $("#preview-name"), codeOutput: $("#preview-code"), board: $("#live-backnumber") });
+  hydrateBacknumbers();
+  initPreview({ input: $("#athlete-name"), countrySelect: $("#country"), board: $("#live-backnumber") });
   setSize(selectedSize);
   initCart(); subscribeCart(renderCart);
   $$(".size-option").forEach((button) => button.addEventListener("click", () => setSize(button.dataset.size)));

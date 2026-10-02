@@ -56,7 +56,7 @@ test("mesajul WhatsApp include toți sportivii și este codat corect", () => {
     orderId: "NSJ-20261002-A7K4",
     items: [
       { athleteName: "POPESCU", country: "România", countryCode: "ROU", sizeLabel: "30 × 30 cm", quantity: 1 },
-      { athleteName: "IONESCU", country: "România", countryCode: "ROU", sizeLabel: "25 × 25 cm", quantity: 2 }
+      { athleteName: "IONESCU", country: "România", countryCode: "ROU", sizeLabel: "40 × 40 cm", quantity: 2 }
     ],
     clubOrder: true, clubName: "Club Test", customerName: "Ion Popescu", customerPhone: "0745 326 270", customerEmail: "ion@example.ro",
     county: "Bihor", city: "Oradea", street: "Republicii", streetNumber: "1", total: null

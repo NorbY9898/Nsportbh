@@ -6,8 +6,8 @@ for source in (ROOT / "assets" / "images").rglob("*.png"):
     target = source.with_suffix(".webp")
     with Image.open(source) as image:
         image.save(target, "WEBP", quality=84, method=6, optimize=True)
-        if source.name == "hero-judoka-popescu.png":
+        if source.name in {"hero-judoka-popescu.png", "hero-judoka-popescu-v2.png"}:
             mobile = image.copy()
             mobile.thumbnail((960, 960), Image.Resampling.LANCZOS)
-            mobile.save(source.with_name("hero-judoka-popescu-960.webp"), "WEBP", quality=82, method=6, optimize=True)
+            mobile.save(source.with_name(f"{source.stem}-960.webp"), "WEBP", quality=82, method=6, optimize=True)
     print(f"{source.relative_to(ROOT)} -> {target.relative_to(ROOT)}")

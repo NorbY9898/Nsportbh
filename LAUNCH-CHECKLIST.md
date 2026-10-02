@@ -42,9 +42,10 @@ Nu publica magazinul ca flux comercial activ până când toate elementele oblig
 
 ## Produse și comerț
 
-- [ ] Preț 15 × 15 introdus
-- [ ] Preț 25 × 25 introdus
+- [ ] Preț 20 × 20 introdus
 - [ ] Preț 30 × 30 introdus
+- [ ] Preț 35 × 35 introdus
+- [ ] Preț 40 × 40 introdus
 - [ ] Transport configurat
 - [ ] Curier confirmat
 - [ ] Termen de livrare confirmat

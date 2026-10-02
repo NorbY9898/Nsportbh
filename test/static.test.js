@@ -50,6 +50,28 @@ test("configurația conține endpoint-ul Formspree furnizat și este activă", (
   assert.match(config, /configured:\s*true/);
 });
 
+test("configurația și interfața folosesc exclusiv cele patru dimensiuni noi", () => {
+  const config = readFileSync(resolve(root, "assets/js/config.js"), "utf8");
+  const html = readFileSync(resolve(root, "index.html"), "utf8");
+  for (const size of ["20x20", "30x30", "35x35", "40x40"]) assert.match(config, new RegExp(`"${size}"`));
+  assert.doesNotMatch(`${config}\n${html}`, /15x15|25x25|15 × 15|25 × 25/);
+});
+
+test("backnumber renderer-ul nu conține marcaje OFFICIAL, IJF sau QR false", () => {
+  const renderer = readFileSync(resolve(root, "assets/js/backnumber-renderer.js"), "utf8");
+  const html = readFileSync(resolve(root, "index.html"), "utf8");
+  assert.doesNotMatch(`${renderer}\n${html}`, /OFFICIAL|\bIJF\b|QR[- ]?code/i);
+  assert.match(renderer, /backnumber-visual__name/);
+  assert.match(renderer, /backnumber-visual__code/);
+});
+
+test("logo-ul oficial FR Judo este folosit ca asset, nu ca text în header", () => {
+  const html = readFileSync(resolve(root, "index.html"), "utf8");
+  assert.equal(existsSync(resolve(root, "assets/images/frjudo/fr-judo-logo-original.png")), true);
+  assert.match(html, /brand__partner-logo/);
+  assert.doesNotMatch(html, /<span class="brand__partner">FR JUDO<\/span>/);
+});
+
 test("fluxul de submit are blocare internă pentru trimitere dublă", () => {
   const app = readFileSync(resolve(root, "assets/js/app.js"), "utf8");
   assert.match(app, /let submissionInProgress = false/);

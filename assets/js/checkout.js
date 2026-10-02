@@ -1,4 +1,6 @@
-import { STORE_CONFIG, formatMoney } from "./config.js";
+import { PRODUCT_CONFIG, STORE_CONFIG, formatMoney } from "./config.js";
+
+const VALID_SIZE_LABELS = new Set(Object.values(PRODUCT_CONFIG.sizes).map((size) => size.label));
 
 export function generateOrderId(date = new Date()) {
   const day = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Bucharest", year: "numeric", month: "2-digit", day: "2-digit" }).format(date).replaceAll("-", "");
@@ -52,6 +54,7 @@ export function serializeCheckout(form, items, totals, orderId) {
 export function validateCheckout(order) {
   const errors = [];
   if (!order.items.length) errors.push("Coșul este gol.");
+  if (order.items.some((item) => !VALID_SIZE_LABELS.has(item.sizeLabel))) errors.push("Alege din nou dimensiunea produsului.");
   if (!order.customerName || order.customerName.length < 3) errors.push("Completează numele și prenumele.");
   if (!/^[+\d][\d\s().-]{7,18}$/.test(order.customerPhone || "")) errors.push("Introdu un număr de telefon valid.");
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(order.customerEmail || "")) errors.push("Introdu o adresă de e-mail validă.");

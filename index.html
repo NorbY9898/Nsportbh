@@ -11,15 +11,15 @@
   <meta property="og:title" content="Backnumber Judo personalizat | NSPORT × FR Judo">
   <meta property="og:description" content="Numele tău. Țara ta. Identitatea ta pe tatami.">
   <meta property="og:url" content="https://nsport.ro/">
-  <meta property="og:image" content="https://nsport.ro/assets/images/hero/hero-judoka-popescu.webp">
+  <meta property="og:image" content="https://nsport.ro/assets/images/hero/hero-judoka-popescu-v2.webp">
   <meta name="theme-color" content="#09090b">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="assets/images/hero/hero-judoka-popescu.webp" as="image" type="image/webp" fetchpriority="high">
+  <link rel="preload" href="assets/images/hero/hero-judoka-popescu-v2.webp" as="image" type="image/webp" fetchpriority="high">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/animations.css">
   <link rel="stylesheet" href="assets/css/responsive.css">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Product","name":"Backnumber Judo personalizat","brand":{"@type":"Brand","name":"NSPORT"},"description":"Backnumber pentru judogi, personalizat cu numele sportivului și codul țării.","additionalProperty":[{"@type":"PropertyValue","name":"Dimensiuni","value":"15 × 15 cm, 25 × 25 cm, 30 × 30 cm"}]}
+  {"@context":"https://schema.org","@type":"Product","name":"Backnumber Judo personalizat","brand":{"@type":"Brand","name":"NSPORT"},"description":"Backnumber pentru judogi, personalizat cu numele sportivului și codul țării.","additionalProperty":[{"@type":"PropertyValue","name":"Dimensiuni","value":"20 × 20 cm, 30 × 30 cm, 35 × 35 cm, 40 × 40 cm"}]}
   </script>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Organization","name":"NSPORT","url":"https://nsport.ro/","email":"nsportoradeabh@yahoo.com","telephone":"+40745326270"}
@@ -29,7 +29,7 @@
   <a class="skip-link" href="#continut">Sari la conținut</a>
   <header class="site-header" id="site-header">
     <a class="brand" href="#acasa" aria-label="NSPORT × FR Judo — pagina principală">
-      <span class="brand__nsport">NSPORT</span><span aria-hidden="true">×</span><span class="brand__partner">FR JUDO</span>
+      <span class="brand__nsport">NSPORT</span><span aria-hidden="true">×</span><img class="brand__partner-logo" src="assets/images/frjudo/fr-judo-logo-original.png" alt="Federația Română de Judo" width="590" height="330">
     </a>
     <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Deschide meniul"><span></span><span></span></button>
     <nav class="main-nav" id="main-nav" aria-label="Navigare principală">
@@ -43,15 +43,15 @@
 
   <main id="continut">
     <section class="hero" id="acasa" aria-labelledby="hero-title">
-      <img class="hero__image" src="assets/images/hero/hero-judoka-popescu.webp" srcset="assets/images/hero/hero-judoka-popescu-960.webp 960w, assets/images/hero/hero-judoka-popescu.webp 1680w" sizes="100vw" alt="Judoka în judogi alb, văzut din spate, purtând backnumber POPESCU ROU" width="1680" height="945" fetchpriority="high">
+      <img class="hero__image" src="assets/images/hero/hero-judoka-popescu-v2.webp" srcset="assets/images/hero/hero-judoka-popescu-v2-960.webp 960w, assets/images/hero/hero-judoka-popescu-v2.webp 1680w" sizes="100vw" alt="Judoka în judogi alb, văzut din spate, purtând backnumber POPESCU ROU" width="1680" height="945" fetchpriority="high">
       <div class="hero__veil"></div>
       <div class="hero__content">
-        <p class="eyebrow"><span>NSPORT</span> × <span>FR JUDO</span></p>
+        <p class="eyebrow hero-lockup"><span>NSPORT</span> × <img src="assets/images/frjudo/fr-judo-logo-original.png" alt="Federația Română de Judo" width="590" height="330"></p>
         <h1 id="hero-title">Numele tău.<br>Țara ta.<br><em>Identitatea ta pe tatami.</em></h1>
         <p>Configurează backnumber-ul tău personalizat și comandă-l online, oriunde în România.</p>
         <div class="button-row"><a class="button button--red" href="#personalizeaza">Personalizează acum</a><a class="button button--glass" href="#dimensiuni">Vezi dimensiunile</a></div>
       </div>
-      <div class="hero__meta"><span>Personalizare live</span><span>3 dimensiuni</span><span>Comenzi pentru cluburi</span></div>
+      <div class="hero__meta"><span>Personalizare live</span><span>4 dimensiuni</span><span>Comenzi pentru cluburi</span></div>
     </section>
 
     <section class="configurator section" id="personalizeaza" aria-labelledby="config-title">
@@ -59,9 +59,7 @@
       <div class="config-grid">
         <div class="preview-stage" data-reveal>
           <div class="preview-stage__grid" aria-hidden="true"></div>
-          <div class="live-backnumber" id="live-backnumber" aria-label="Previzualizare backnumber">
-            <span id="preview-name">POPESCU</span><span id="preview-code">ROU</span>
-          </div>
+          <div class="live-backnumber" id="live-backnumber" data-backnumber data-athlete-name="POPESCU" data-country-code="ROU" data-size="30 × 30 cm" aria-label="Previzualizare backnumber POPESCU ROU"></div>
           <div class="preview-measure"><span id="selected-size-label">30 × 30 cm</span><span>Previzualizare orientativă</span></div>
         </div>
         <div class="config-panel" data-reveal>
@@ -72,9 +70,10 @@
           <label for="country">Țara și codul</label>
           <select id="country" name="country"></select>
           <fieldset class="size-picker"><legend>Dimensiune</legend>
-            <button class="size-option" type="button" data-size="15x15" aria-pressed="false"><span>15 × 15</span><small>cm · format compact</small><strong>Preț la cerere</strong></button>
-            <button class="size-option" type="button" data-size="25x25" aria-pressed="false"><span>25 × 25</span><small>cm · format mediu</small><strong>Preț la cerere</strong></button>
-            <button class="size-option is-selected" type="button" data-size="30x30" aria-pressed="true"><span>30 × 30</span><small>cm · format mare</small><strong>Preț la cerere</strong></button>
+            <button class="size-option" type="button" data-size="20x20" aria-pressed="false"><span>20 × 20</span><small>cm · format compact</small><strong>Preț la cerere</strong></button>
+            <button class="size-option is-selected" type="button" data-size="30x30" aria-pressed="true"><span>30 × 30</span><small>cm · format mediu</small><strong>Preț la cerere</strong></button>
+            <button class="size-option" type="button" data-size="35x35" aria-pressed="false"><span>35 × 35</span><small>cm · format mare</small><strong>Preț la cerere</strong></button>
+            <button class="size-option" type="button" data-size="40x40" aria-pressed="false"><span>40 × 40</span><small>cm · format extra mare</small><strong>Preț la cerere</strong></button>
           </fieldset>
           <div class="quantity-price"><div><label for="quantity">Cantitate</label><div class="quantity-control"><button id="quantity-minus" type="button" aria-label="Scade cantitatea">−</button><input id="quantity" type="number" min="1" max="99" value="1"><button id="quantity-plus" type="button" aria-label="Crește cantitatea">+</button></div></div><div class="price-block"><small>Preț</small><strong id="product-price">Preț la cerere</strong></div></div>
           <label class="switch-row" id="cluburi"><input id="club-order-toggle" type="checkbox"><span class="switch" aria-hidden="true"></span><span><strong>Comand pentru un club</strong><small>Adaugă rapid mai mulți sportivi</small></span></label>
@@ -86,43 +85,44 @@
     </section>
 
     <section class="sizes section section--light" id="dimensiuni" aria-labelledby="sizes-title">
-      <div class="section-heading section-heading--dark" data-reveal><p class="kicker">Proporție reală</p><h2 id="sizes-title">Alege dimensiunea potrivită</h2><p>Comparația de mai jos păstrează raportul matematic 15 : 25 : 30.</p></div>
+      <div class="section-heading section-heading--dark" data-reveal><p class="kicker">Proporție reală</p><h2 id="sizes-title">Alege dimensiunea potrivită</h2><p>Comparația de mai jos păstrează raportul matematic 20 : 30 : 35 : 40.</p></div>
       <div class="size-comparison" data-reveal>
-        <div class="scale-card"><div class="scale-square scale-square--15"><b>15</b><span>× 15 cm</span></div><h3>Compact</h3><p>O opțiune discretă. Confirmă potrivirea pentru utilizarea ta înainte de comandă.</p></div>
-        <div class="scale-card"><div class="scale-square scale-square--25"><b>25</b><span>× 25 cm</span></div><h3>Mediu</h3><p>Echilibru vizual între suprafață și lizibilitate.</p></div>
-        <div class="scale-card"><div class="scale-square scale-square--30"><b>30</b><span>× 30 cm</span></div><h3>Mare</h3><p>Cea mai amplă dintre variantele disponibile în configurator.</p></div>
+        <div class="scale-card"><div class="scale-backnumber scale-backnumber--20" data-backnumber data-athlete-name="POPESCU" data-country-code="ROU" data-size="20 × 20 cm"></div><h3>20 × 20 cm</h3><p>Format compact.</p></div>
+        <div class="scale-card"><div class="scale-backnumber scale-backnumber--30" data-backnumber data-athlete-name="POPESCU" data-country-code="ROU" data-size="30 × 30 cm"></div><h3>30 × 30 cm</h3><p>Format mediu.</p></div>
+        <div class="scale-card"><div class="scale-backnumber scale-backnumber--35" data-backnumber data-athlete-name="POPESCU" data-country-code="ROU" data-size="35 × 35 cm"></div><h3>35 × 35 cm</h3><p>Format mare.</p></div>
+        <div class="scale-card"><div class="scale-backnumber scale-backnumber--40" data-backnumber data-athlete-name="POPESCU" data-country-code="ROU" data-size="40 × 40 cm"></div><h3>40 × 40 cm</h3><p>Format extra mare.</p></div>
       </div>
     </section>
 
     <section class="story" aria-labelledby="story-title">
       <div class="story__intro section-heading" data-reveal><p class="kicker">Poveste în opt cadre</p><h2 id="story-title">De la identitate la tatami</h2></div>
-      <article class="story-frame story-frame--wide" data-reveal><img src="assets/images/hero/hero-judoka-popescu.webp" alt="Judoka pregătit pentru tatami" loading="lazy" width="1680" height="945"><div><span>01 / Identitate</span><h3>Totul începe cu numele.</h3></div></article>
+      <article class="story-frame story-frame--wide" data-reveal><img src="assets/images/hero/hero-judoka-popescu-v2.webp" alt="Judoka pregătit pentru tatami" loading="lazy" width="1680" height="945"><div><span>01 / Identitate</span><h3>Totul începe cu numele.</h3></div></article>
       <div class="story-duo">
         <article class="story-frame" data-reveal><img src="assets/images/story/pregatire-centura.webp" alt="Sportiv care își aranjează centura neagră" loading="lazy" width="1536" height="1024"><div><span>02 / Pregătire</span><h3>Ritualul dinaintea luptei.</h3></div></article>
-        <article class="story-frame" data-reveal><img src="assets/images/story/detaliu-backnumber.webp" alt="Detaliu de material al backnumber-ului POPESCU ROU" loading="lazy" width="1680" height="945"><div><span>03 / Precizie</span><h3>Fiecare fibră contează.</h3></div></article>
+        <article class="story-frame" data-reveal><img src="assets/images/story/detaliu-backnumber-v2.webp" alt="Detaliu de material al backnumber-ului POPESCU ROU" loading="lazy" width="1680" height="945"><div><span>03 / Precizie</span><h3>Fiecare fibră contează.</h3></div></article>
       </div>
       <div class="story-duo story-duo--portraits">
-        <article class="story-frame" data-reveal><img src="assets/images/story/judogi-alb.webp" alt="Sportiv în judogi alb cu backnumber POPESCU ROU" loading="lazy" width="1152" height="1440"><div><span>04 / Alb</span><h3>Contrast curat.</h3></div></article>
-        <article class="story-frame" data-reveal><img src="assets/images/story/judogi-albastru.webp" alt="Sportiv în judogi albastru cu backnumber POPESCU ROU" loading="lazy" width="1152" height="1440"><div><span>05 / Albastru</span><h3>Vizibil în orice cadru.</h3></div></article>
+        <article class="story-frame" data-reveal><img src="assets/images/story/judogi-alb-v2.webp" alt="Sportiv în judogi alb cu backnumber POPESCU ROU" loading="lazy" width="1152" height="1440"><div><span>04 / Alb</span><h3>Contrast curat.</h3></div></article>
+        <article class="story-frame" data-reveal><img src="assets/images/story/judogi-albastru-v2.webp" alt="Sportiv în judogi albastru cu backnumber POPESCU ROU" loading="lazy" width="1152" height="1440"><div><span>05 / Albastru</span><h3>Vizibil în orice cadru.</h3></div></article>
       </div>
-      <article class="story-frame story-frame--wide" data-reveal><img src="assets/images/story/spre-tatami.webp" alt="Sportiv mergând spre tatami" loading="lazy" width="1680" height="945"><div><span>06 / Concentrare</span><h3>Un pas înainte.</h3></div></article>
-      <article class="story-frame story-frame--wide" data-reveal><img src="assets/images/story/actiune-judo.webp" alt="Acțiune judo dinamică pe tatami" loading="lazy" width="1680" height="945"><div><span>07 / Acțiune</span><h3>Identitate în mișcare.</h3></div></article>
-      <article class="story-frame story-frame--product" data-reveal><img src="assets/images/product/backnumber-studio.webp" alt="Backnumber personalizat POPESCU ROU fotografiat în studio" loading="lazy" width="1536" height="1024"><div><span>08 / Produs</span><h3>Pregătit pentru numele tău.</h3></div></article>
+      <article class="story-frame story-frame--wide" data-reveal><img src="assets/images/story/spre-tatami-v2.webp" alt="Sportiv mergând spre tatami" loading="lazy" width="1680" height="945"><div><span>06 / Concentrare</span><h3>Un pas înainte.</h3></div></article>
+      <article class="story-frame story-frame--wide" data-reveal><img src="assets/images/story/actiune-judo-v2.webp" alt="Acțiune judo dinamică pe tatami" loading="lazy" width="1680" height="945"><div><span>07 / Acțiune</span><h3>Identitate în mișcare.</h3></div></article>
+      <article class="story-frame story-frame--product" data-reveal><img src="assets/images/product/backnumber-studio-v2.webp" alt="Backnumber personalizat POPESCU ROU fotografiat în studio" loading="lazy" width="1536" height="1024"><div><span>08 / Produs</span><h3>Pregătit pentru numele tău.</h3></div></article>
     </section>
 
     <section class="gallery section" id="galerie" aria-labelledby="gallery-title">
       <div class="section-heading" data-reveal><p class="kicker">Galerie produs</p><h2 id="gallery-title">Privește mai aproape.</h2></div>
       <div class="gallery-layout" data-reveal>
-        <div class="gallery-main-wrap"><img id="gallery-main" src="assets/images/product/backnumber-studio.webp" alt="Backnumber POPESCU ROU în studio" loading="lazy"></div>
+        <div class="gallery-main-wrap"><img id="gallery-main" src="assets/images/product/backnumber-studio-v2.webp" alt="Backnumber POPESCU ROU în studio" loading="lazy"></div>
         <div class="gallery-thumbs" role="list" aria-label="Imagini produs">
-          <button class="gallery-thumb is-active" type="button"><img src="assets/images/product/backnumber-studio.webp" alt="Backnumber în studio" loading="lazy"></button>
-          <button class="gallery-thumb" type="button"><img src="assets/images/story/judogi-alb.webp" alt="Backnumber pe judogi alb" loading="lazy"></button>
-          <button class="gallery-thumb" type="button"><img src="assets/images/story/judogi-albastru.webp" alt="Backnumber pe judogi albastru" loading="lazy"></button>
-          <button class="gallery-thumb" type="button"><img src="assets/images/story/detaliu-backnumber.webp" alt="Prim-plan al materialului" loading="lazy"></button>
+          <button class="gallery-thumb is-active" type="button"><img src="assets/images/product/backnumber-studio-v2.webp" alt="Backnumber în studio" loading="lazy"></button>
+          <button class="gallery-thumb" type="button"><img src="assets/images/story/judogi-alb-v2.webp" alt="Backnumber pe judogi alb" loading="lazy"></button>
+          <button class="gallery-thumb" type="button"><img src="assets/images/story/judogi-albastru-v2.webp" alt="Backnumber pe judogi albastru" loading="lazy"></button>
+          <button class="gallery-thumb" type="button"><img src="assets/images/story/detaliu-backnumber-v2.webp" alt="Prim-plan al materialului" loading="lazy"></button>
           <button class="gallery-thumb" type="button"><img src="assets/images/story/pregatire-centura.webp" alt="Textura judogiului" loading="lazy"></button>
-          <button class="gallery-thumb" type="button"><img src="assets/images/hero/hero-judoka-popescu.webp" alt="Sportiv pe tatami" loading="lazy"></button>
-          <button class="gallery-thumb" type="button"><img src="assets/images/story/spre-tatami.webp" alt="Drumul către tatami" loading="lazy"></button>
-          <button class="gallery-thumb" type="button"><img src="assets/images/story/actiune-judo.webp" alt="Acțiune judo" loading="lazy"></button>
+          <button class="gallery-thumb" type="button"><img src="assets/images/hero/hero-judoka-popescu-v2.webp" alt="Sportiv pe tatami" loading="lazy"></button>
+          <button class="gallery-thumb" type="button"><img src="assets/images/story/spre-tatami-v2.webp" alt="Drumul către tatami" loading="lazy"></button>
+          <button class="gallery-thumb" type="button"><img src="assets/images/story/actiune-judo-v2.webp" alt="Acțiune judo" loading="lazy"></button>
         </div>
       </div>
     </section>
@@ -137,13 +137,13 @@
       <div class="section-heading" data-reveal><p class="kicker">Informații utile</p><h2 id="faq-title">Întrebări frecvente</h2></div>
       <div class="faq-list" data-reveal>
         <div class="faq-item"><button class="faq-question" aria-expanded="false">Cum personalizez backnumber-ul?<span>+</span></button><div class="faq-answer" hidden>Introdu numele sportivului, selectează țara, dimensiunea și cantitatea. Previzualizarea se actualizează imediat.</div></div>
-        <div class="faq-item"><button class="faq-question" aria-expanded="false">Ce dimensiuni sunt disponibile?<span>+</span></button><div class="faq-answer" hidden>Sunt disponibile variantele 15 × 15 cm, 25 × 25 cm și 30 × 30 cm.</div></div>
+        <div class="faq-item"><button class="faq-question" aria-expanded="false">Ce dimensiuni sunt disponibile?<span>+</span></button><div class="faq-answer" hidden>Sunt disponibile variantele 20 × 20 cm, 30 × 30 cm, 35 × 35 cm și 40 × 40 cm.</div></div>
         <div class="faq-item"><button class="faq-question" aria-expanded="false">Pot comanda pentru un club?<span>+</span></button><div class="faq-answer" hidden>Da. Activează „Comand pentru un club”, completează datele clubului și adaugă fiecare sportiv în coș.</div></div>
         <div class="faq-item"><button class="faq-question" aria-expanded="false">Pot comanda mai multe nume?<span>+</span></button><div class="faq-answer" hidden>Da. Configurează și adaugă pe rând fiecare nume. Toate produsele rămân în același coș.</div></div>
         <div class="faq-item"><button class="faq-question" aria-expanded="false">Livrați în toată România?<span>+</span></button><div class="faq-answer" hidden>Da. Costul, curierul și termenul de livrare se confirmă înainte de expediere.</div></div>
-        <div class="faq-item"><button class="faq-question" aria-expanded="false">Cum trimit comanda?<span>+</span></button><div class="faq-answer" hidden>O poți trimite prin formularul online după configurarea Formspree sau prin WhatsApp.</div></div>
+        <div class="faq-item"><button class="faq-question" aria-expanded="false">Cum trimit comanda?<span>+</span></button><div class="faq-answer" hidden>O poți trimite prin formularul online securizat sau prin WhatsApp.</div></div>
         <div class="faq-item"><button class="faq-question" aria-expanded="false">Pot comanda prin WhatsApp?<span>+</span></button><div class="faq-answer" hidden>Da. Site-ul pregătește automat un mesaj cu produsele și datele completate.</div></div>
-        <div class="faq-item"><button class="faq-question" aria-expanded="false">Pot comanda online?<span>+</span></button><div class="faq-answer" hidden>Da, după activarea endpoint-ului de formular. Până atunci, WhatsApp rămâne disponibil.</div></div>
+        <div class="faq-item"><button class="faq-question" aria-expanded="false">Pot comanda online?<span>+</span></button><div class="faq-answer" hidden>Da. Formularul online este activ, iar WhatsApp rămâne disponibil ca alternativă.</div></div>
         <div class="faq-item"><button class="faq-question" aria-expanded="false">Cum verific numele?<span>+</span></button><div class="faq-answer" hidden>Numele apare cu majuscule în previzualizarea live și din nou în recapitularea comenzii.</div></div>
         <div class="faq-item"><button class="faq-question" aria-expanded="false">Ce se întâmplă dacă introduc numele greșit?<span>+</span></button><div class="faq-answer" hidden>Folosește opțiunea „Editează” din coș înainte de trimitere. Produsul este personalizat, de aceea verificarea este obligatorie.</div></div>
         <div class="faq-item"><button class="faq-question" aria-expanded="false">Cum primesc confirmarea?<span>+</span></button><div class="faq-answer" hidden>După un răspuns real de succes al formularului, site-ul afișează referința comenzii. NSPORT te va contacta pentru confirmarea detaliilor.</div></div>
@@ -156,7 +156,7 @@
     </section>
   </main>
 
-  <footer class="site-footer"><div><div class="brand"><span class="brand__nsport">NSPORT</span><span>×</span><span class="brand__partner">FR JUDO</span></div><p>Backnumber Judo personalizat</p></div><nav aria-label="Linkuri utile"><a href="#personalizeaza">Personalizează</a><a href="#dimensiuni">Dimensiuni</a><a href="#cum-comand">Cum comand</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></nav><nav aria-label="Informații juridice"><a href="termeni-si-conditii.html">Termeni și condiții</a><a href="politica-confidentialitate.html">Confidențialitate</a><a href="politica-cookies.html">Cookie</a><a href="politica-retur.html">Retur</a><a href="livrare-plata.html">Livrare și plată</a><a href="https://anpc.ro/sal/" target="_blank" rel="noopener">Soluționare alternativă ANPC</a><button id="cookie-preferences" type="button">Modifică preferințele cookie</button></nav><div class="merchant"><b>Date comerciant</b><span>[DENUMIRE LEGALĂ FIRMĂ]</span><span>[CUI]</span><span>[NR. REGISTRUL COMERȚULUI]</span><span>[SEDIU SOCIAL]</span></div><p class="copyright">© <span id="current-year"></span> NSPORT. Toate drepturile rezervate.</p></footer>
+  <footer class="site-footer"><div><div class="brand"><span class="brand__nsport">NSPORT</span><span>×</span><img class="brand__partner-logo" src="assets/images/frjudo/fr-judo-logo-original.png" alt="Federația Română de Judo" width="590" height="330"></div><p>Backnumber Judo personalizat</p></div><nav aria-label="Linkuri utile"><a href="#personalizeaza">Personalizează</a><a href="#dimensiuni">Dimensiuni</a><a href="#cum-comand">Cum comand</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></nav><nav aria-label="Informații juridice"><a href="termeni-si-conditii.html">Termeni și condiții</a><a href="politica-confidentialitate.html">Confidențialitate</a><a href="politica-cookies.html">Cookie</a><a href="politica-retur.html">Retur</a><a href="livrare-plata.html">Livrare și plată</a><a href="https://anpc.ro/sal/" target="_blank" rel="noopener">Soluționare alternativă ANPC</a><button id="cookie-preferences" type="button">Modifică preferințele cookie</button></nav><div class="merchant"><b>Date comerciant</b><span>[DENUMIRE LEGALĂ FIRMĂ]</span><span>[CUI]</span><span>[NR. REGISTRUL COMERȚULUI]</span><span>[SEDIU SOCIAL]</span></div><p class="copyright">© <span id="current-year"></span> NSPORT. Toate drepturile rezervate.</p></footer>
 
   <div class="cart-backdrop" id="cart-backdrop" hidden></div>
   <aside class="cart-drawer" id="cart-drawer" aria-labelledby="cart-title"><div class="drawer-head"><div><small>Comanda ta</small><h2 id="cart-title">Coș</h2></div><button class="close-button" id="close-cart" type="button" aria-label="Închide coșul">×</button></div><p id="cart-empty">Coșul este gol. Configurează primul backnumber.</p><div id="cart-items" class="cart-items"></div><div class="cart-summary"><div><span>Subtotal</span><strong id="cart-subtotal">Preț la cerere</strong></div><p>Costul transportului va fi confirmat înainte de expediere.</p><div class="cart-total"><span>Total</span><strong id="cart-total">Preț la cerere</strong></div><button class="button button--red button--wide" id="open-checkout" type="button">Continuă către checkout</button></div></aside>

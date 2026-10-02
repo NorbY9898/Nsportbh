@@ -1,9 +1,10 @@
 export const PRODUCT_CONFIG = Object.freeze({
   name: "Backnumber Judo personalizat",
   sizes: Object.freeze({
-    "15x15": { label: "15 × 15 cm", price: null, note: "Format compact" },
-    "25x25": { label: "25 × 25 cm", price: null, note: "Format mediu" },
-    "30x30": { label: "30 × 30 cm", price: null, note: "Format mare" }
+    "20x20": { label: "20 × 20 cm", width: 20, height: 20, price: null, note: "Format compact" },
+    "30x30": { label: "30 × 30 cm", width: 30, height: 30, price: null, note: "Format mediu" },
+    "35x35": { label: "35 × 35 cm", width: 35, height: 35, price: null, note: "Format mare" },
+    "40x40": { label: "40 × 40 cm", width: 40, height: 40, price: null, note: "Format extra mare" }
   })
 });
 

@@ -38,8 +38,13 @@ Toate valorile comerciale sunt în [`assets/js/config.js`](assets/js/config.js).
 În `PRODUCT_CONFIG.sizes`, înlocuiește `null` cu numărul în lei, fără text:
 
 ```js
-"15x15": { label: "15 × 15 cm", price: 99, note: "Format compact" }
+"20x20": { label: "20 × 20 cm", width: 20, height: 20, price: null },
+"30x30": { label: "30 × 30 cm", width: 30, height: 30, price: null },
+"35x35": { label: "35 × 35 cm", width: 35, height: 35, price: null },
+"40x40": { label: "40 × 40 cm", width: 40, height: 40, price: null }
 ```
+
+Dimensiunile disponibile sunt exclusiv **20 × 20 cm, 30 × 30 cm, 35 × 35 cm și 40 × 40 cm**. Fiecare preț se configurează separat prin câmpul `price` al dimensiunii respective.
 
 Cât timp valoarea este `null`, interfața afișează „Preț la cerere” și nu inventează totaluri.
 
@@ -88,14 +93,13 @@ payments: { card: false, bankTransfer: false, cashOnDelivery: false }
 
 Interfața nu simulează plata cu cardul. Activarea unei metode necesită și implementarea/includerea instrucțiunilor contractuale aferente.
 
-## Logo-uri oficiale
+## Logo oficial FR Judo
 
-- pune logo-ul NSPORT în `assets/images/nsport/`;
-- pune exclusiv logo-ul oficial primit de la FR Judo în `assets/images/frjudo/`;
-- păstrează proporțiile și nu modifica fișierul oficial;
-- actualizează componenta `.brand` din pagini numai după ce fișierele și drepturile sunt confirmate.
+Fișierul furnizat este păstrat nemodificat în `assets/images/frjudo/fr-judo-logo-original.png` și este folosit în header cu `object-fit: contain`. Nu este un logo generat și nu este aplicat automat pe backnumber.
 
-În versiunea actuală se folosește doar text, nu un logo FR Judo generat.
+## Backnumber renderer
+
+Componenta centrală este `assets/js/backnumber-renderer.js`. Același renderer este folosit de configuratorul live, comparația de dimensiuni, coș, lista de club și recapitularea checkout. Sportivul apare cu majuscule în panoul albastru, iar codul de țară apare sub acesta pe zona albă. Nu sunt generate marcaje de certificare, QR-uri sau identificatori falși.
 
 ## Imagini
 
