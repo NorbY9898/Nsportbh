@@ -1,0 +1,10 @@
+{
+  "name": "nsport-fr-judo-backnumber",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check assets/js/app.js && node --check assets/js/checkout.js && node --check assets/js/form-backend.js"
+  }
+}

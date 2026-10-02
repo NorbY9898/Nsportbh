@@ -1,0 +1,13 @@
+from pathlib import Path
+from PIL import Image
+
+ROOT = Path(__file__).resolve().parents[1]
+for source in (ROOT / "assets" / "images").rglob("*.png"):
+    target = source.with_suffix(".webp")
+    with Image.open(source) as image:
+        image.save(target, "WEBP", quality=84, method=6, optimize=True)
+        if source.name == "hero-judoka-popescu.png":
+            mobile = image.copy()
+            mobile.thumbnail((960, 960), Image.Resampling.LANCZOS)
+            mobile.save(source.with_name("hero-judoka-popescu-960.webp"), "WEBP", quality=82, method=6, optimize=True)
+    print(f"{source.relative_to(ROOT)} -> {target.relative_to(ROOT)}")
