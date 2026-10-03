@@ -16,7 +16,7 @@ export async function submitOrder(payload, signal) {
   }
   let response;
   try {
-    response = await fetch(STORE_CONFIG.formBackend.endpoint, {
+    response = await fetch(STORE_CONFIG.formBackend.endpoint.trim(), {
       method: "POST",
       headers: { Accept: "application/json" },
       body: toFormData(payload),
