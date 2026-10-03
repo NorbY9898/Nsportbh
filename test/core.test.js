@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { normalizeAthleteName, validateProduct, createProduct } from "../assets/js/product.js";
-import { generateOrderId, validateCheckout, toBackendPayload } from "../assets/js/checkout.js";
-import { buildQrPayload, createQrMatrix } from "../assets/js/qr-code.js";
+import { normalizeAthleteName, validateProduct, createProduct } from "../public/assets/js/product.js";
+import { generateOrderId, validateCheckout, toBackendPayload } from "../public/assets/js/checkout.js";
+import { buildQrPayload, createQrMatrix } from "../public/assets/js/qr-code.js";
 
 test("normalizează nume românești și internaționale", () => {
   assert.equal(normalizeAthleteName("  Șerban-Ionuț  "), "ȘERBAN-IONUȚ ");

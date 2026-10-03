@@ -17,8 +17,8 @@ Do not display OFFICIAL, IJF, fake IDs or certification claims.
 
 ## 1. Hero
 
-- Fișier final: `assets/images/hero/hero-judoka-popescu-v4.png`
-- Variantă web: `assets/images/hero/hero-judoka-popescu-v4.webp`
+- Fișier final: `public/assets/images/hero/hero-judoka-popescu-v4.png`
+- Variantă web: `public/assets/images/hero/hero-judoka-popescu-v4.webp`
 
 ```text
 Use case: precise-object-edit. Edit only the backnumber patch on the existing wide hero photo. Preserve the athlete, anatomy, white judogi, black belt, arena, lighting, framing, negative space and color grading. Use a white square textile base and a wide slightly arched/trapezoidal dark-blue top panel. Match perspective, stitching, folds and light.
@@ -28,7 +28,7 @@ IMAGEGEN BASE RULE: create only a blank white square textile patch; no text, QR,
 
 ## 2. Pregătire centură
 
-- Fișier: `assets/images/story/pregatire-centura.png`
+- Fișier: `public/assets/images/story/pregatire-centura.png`
 
 ```text
 Close-up of an adult judoka tightening a black belt over a white judogi. Preserve realistic hands, fabric weave and arena lighting. No backnumber is visible. No logos, text, certification marks or watermark.
@@ -36,8 +36,8 @@ Close-up of an adult judoka tightening a black belt over a white judogi. Preserv
 
 ## 3. Detaliu backnumber
 
-- Fișier final: `assets/images/story/detaliu-backnumber-v4.png`
-- Variantă web: `assets/images/story/detaliu-backnumber-v4.webp`
+- Fișier final: `public/assets/images/story/detaliu-backnumber-v4.png`
+- Variantă web: `public/assets/images/story/detaliu-backnumber-v4.webp`
 
 ```text
 Use case: precise-object-edit. Edit only the backnumber in the existing macro close-up. Preserve the athlete, white judogi weave, shoulders, camera angle, lighting and background. Use a white square textile base and a wide slightly arched/trapezoidal dark-blue top panel with realistic stitching and folds.
@@ -47,8 +47,8 @@ IMAGEGEN BASE RULE: create only a blank white square textile patch; no text, QR,
 
 ## 4. Judogi alb
 
-- Fișier final: `assets/images/story/judogi-alb-v4.png`
-- Variantă web: `assets/images/story/judogi-alb-v4.webp`
+- Fișier final: `public/assets/images/story/judogi-alb-v4.png`
+- Variantă web: `public/assets/images/story/judogi-alb-v4.webp`
 
 ```text
 Use case: precise-object-edit. Replace only the backnumber on the existing portrait of the athlete in a white judogi. Preserve pose, anatomy, black belt, arena, lighting, portrait framing and color grading. Use a white square textile base and a wide slightly arched/trapezoidal dark-blue top panel.
@@ -58,8 +58,8 @@ IMAGEGEN BASE RULE: create only a blank white square textile patch; no text, QR,
 
 ## 5. Judogi albastru
 
-- Fișier final: `assets/images/story/judogi-albastru-v4.png`
-- Variantă web: `assets/images/story/judogi-albastru-v4.webp`
+- Fișier final: `public/assets/images/story/judogi-albastru-v4.png`
+- Variantă web: `public/assets/images/story/judogi-albastru-v4.webp`
 
 ```text
 Use case: precise-object-edit. Replace only the backnumber on the existing portrait of the athlete in a blue judogi. Preserve pose, anatomy, black belt, arena, lighting, portrait framing and color grading. Use a white square textile base and a wide slightly arched/trapezoidal dark-blue top panel.
@@ -69,8 +69,8 @@ IMAGEGEN BASE RULE: create only a blank white square textile patch; no text, QR,
 
 ## 6. Spre tatami
 
-- Fișier final: `assets/images/story/spre-tatami-v4.png`
-- Variantă web: `assets/images/story/spre-tatami-v4.webp`
+- Fișier final: `public/assets/images/story/spre-tatami-v4.png`
+- Variantă web: `public/assets/images/story/spre-tatami-v4.webp`
 
 ```text
 Use case: precise-object-edit. Replace only the smaller backnumber on the existing wide shot of the athlete walking toward the tatami. Preserve full-body walking anatomy, white judogi, tunnel, crowd, lighting, framing and reflections. Use a white square textile base and a wide slightly arched/trapezoidal dark-blue top panel.
@@ -80,8 +80,8 @@ IMAGEGEN BASE RULE: create only a blank white square textile patch; no text, QR,
 
 ## 7. Acțiune judo
 
-- Fișier final: `assets/images/story/actiune-judo-v4.png`
-- Variantă web: `assets/images/story/actiune-judo-v4.webp`
+- Fișier final: `public/assets/images/story/actiune-judo-v4.png`
+- Variantă web: `public/assets/images/story/actiune-judo-v4.webp`
 
 ```text
 Use case: precise-object-edit. Replace only the visible oblique backnumber on the white judoka in the existing dynamic throw photo. Preserve both athletes, realistic anatomy, grips, exact action, arena, lighting and framing. Match the patch perspective, folds and light.
@@ -91,8 +91,8 @@ IMAGEGEN BASE RULE: create only a blank white square textile patch; no text, QR,
 
 ## 8. Produs studio
 
-- Fișier final: `assets/images/product/backnumber-studio-v4.png`
-- Variantă web: `assets/images/product/backnumber-studio-v4.webp`
+- Fișier final: `public/assets/images/product/backnumber-studio-v4.png`
+- Variantă web: `public/assets/images/product/backnumber-studio-v4.webp`
 
 ```text
 Use case: precise-object-edit. Preserve the existing dark studio backdrop, red/blue/yellow rim lighting, camera angle, product position, textile realism and stitching. The product is a white square textile backnumber with a wide slightly arched/trapezoidal dark-blue top panel.
@@ -102,4 +102,4 @@ IMAGEGEN BASE RULE: create only a blank white square textile patch; no text, QR,
 
 ## Méret-összehasonlítás
 
-A méretgrafikák nem raszterképek. Az `assets/js/backnumber-renderer.js` és a központi `.backnumber-visual` CSS komponens rajzolja őket. Oldalhosszuk 20 : 30 : 35 : 40, azaz 4 : 6 : 7 : 8 arányban skálázódik.
+A méretgrafikák nem raszterképek. Az `public/assets/js/backnumber-renderer.js` és a központi `.backnumber-visual` CSS komponens rajzolja őket. Oldalhosszuk 20 : 30 : 35 : 40, azaz 4 : 6 : 7 : 8 arányban skálázódik.

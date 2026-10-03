@@ -22,7 +22,7 @@ Surse oficiale verificate:
    https://formspree.io/f/XXXXXXXX
    ```
 
-6. Deschide `assets/js/config.js`.
+6. Deschide `public/assets/js/config.js`.
 7. Verifică exact aceste linii:
 
    ```js

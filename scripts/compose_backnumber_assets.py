@@ -11,6 +11,7 @@ from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
 
 
 ROOT = Path(__file__).resolve().parents[1]
+PUBLIC = ROOT / "public"
 PAYLOAD = "NSPORT|FRJ|NAME=POPESCU|COUNTRY=ROU|SIZE=30x30"
 BLUE = (36, 68, 132, 232)
 ASSETS = [
@@ -25,7 +26,7 @@ ASSETS = [
 
 
 def load_qr_matrix() -> list[list[bool]]:
-    target = ROOT / "assets/images/product/popescu-rou-30x30-qr.json"
+    target = PUBLIC / "assets/images/product/popescu-rou-30x30-qr.json"
     subprocess.run(
         ["node", str(ROOT / "scripts/export-qr-matrix.mjs"), PAYLOAD, str(target)],
         check=True,
@@ -37,12 +38,12 @@ def load_qr_matrix() -> list[list[bool]]:
 
 
 def create_frjudo_logo() -> Image.Image:
-    source = Image.open(ROOT / "assets/images/frjudo/fr-judo-logo-original.png").convert("RGB")
+    source = Image.open(PUBLIC / "assets/images/frjudo/fr-judo-logo-original.png").convert("RGB")
     difference = ImageChops.difference(source, Image.new("RGB", source.size, "white")).convert("L")
     alpha = difference.point(lambda value: 0 if value < 8 else min(255, value * 4))
     logo = source.convert("RGBA")
     logo.putalpha(alpha)
-    output = ROOT / "assets/images/frjudo/fr-judo-logo-transparent.png"
+    output = PUBLIC / "assets/images/frjudo/fr-judo-logo-transparent.png"
     logo.save(output, optimize=True)
     return logo
 
@@ -157,7 +158,7 @@ def main() -> None:
     frjudo_logo = create_frjudo_logo()
     overlay = backnumber_overlay(matrix, frjudo_logo)
     for base_name, output_name, quad in ASSETS:
-        compose(ROOT / base_name, ROOT / output_name, quad, overlay)
+        compose(PUBLIC / base_name, PUBLIC / output_name, quad, overlay)
         print(output_name)
 
 

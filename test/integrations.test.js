@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { submitOrder } from "../assets/js/form-backend.js";
-import { STORE_CONFIG, isFormBackendConfigured } from "../assets/js/config.js";
-import { buildWhatsAppMessage, getWhatsAppUrl } from "../assets/js/whatsapp-order.js";
+import { submitOrder } from "../public/assets/js/form-backend.js";
+import { STORE_CONFIG, isFormBackendConfigured } from "../public/assets/js/config.js";
+import { buildWhatsAppMessage, getWhatsAppUrl } from "../public/assets/js/whatsapp-order.js";
 
 test("Formspree este configurat cu endpoint-ul furnizat", () => {
   assert.equal(STORE_CONFIG.formBackend.provider, "formspree");

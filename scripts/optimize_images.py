@@ -2,7 +2,8 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
-for source in (ROOT / "assets" / "images").rglob("*.png"):
+PUBLIC = ROOT / "public"
+for source in (PUBLIC / "assets" / "images").rglob("*.png"):
     if source.stem.endswith("-base"):
         continue
     target = source.with_suffix(".webp")
@@ -12,4 +13,4 @@ for source in (ROOT / "assets" / "images").rglob("*.png"):
             mobile = image.copy()
             mobile.thumbnail((960, 960), Image.Resampling.LANCZOS)
             mobile.save(source.with_name(f"{source.stem}-960.webp"), "WEBP", quality=82, method=6, optimize=True)
-    print(f"{source.relative_to(ROOT)} -> {target.relative_to(ROOT)}")
+    print(f"{source.relative_to(PUBLIC)} -> {target.relative_to(PUBLIC)}")

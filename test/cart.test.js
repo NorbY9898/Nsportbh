@@ -8,7 +8,7 @@ globalThis.localStorage = {
   removeItem: (key) => memory.delete(key)
 };
 
-const cart = await import("../assets/js/cart.js");
+const cart = await import("../public/assets/js/cart.js");
 
 const item = (id, name = "POPESCU", size = "30x30") => ({ id, athleteName: name, country: "România", countryCode: "ROU", size, sizeLabel: "30 × 30 cm", quantity: 1, unitPrice: null, subtotal: null });
 

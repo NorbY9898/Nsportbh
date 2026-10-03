@@ -6,7 +6,7 @@ Microsite e-commerce static, mobile-first, în limba română, compatibil cu pub
 
 ## Rulare locală
 
-Modulele JavaScript au nevoie de un server HTTP local (nu deschide direct `index.html` cu `file://`).
+Modulele JavaScript au nevoie de un server HTTP local (nu deschide direct `public/index.html` cu `file://`).
 
 ```powershell
 node scripts/serve.mjs
@@ -15,7 +15,7 @@ node scripts/serve.mjs
 Deschide `http://127.0.0.1:4173/`. Nu sunt necesare pachete npm. Alternativ, dacă Python este deja instalat:
 
 ```powershell
-python -m http.server 8080
+python -m http.server 8080 --directory public
 ```
 
 Deschide apoi adresa afișată de server.
@@ -31,7 +31,7 @@ npm run check
 
 ## Configurare centrală
 
-Toate valorile comerciale sunt în [`assets/js/config.js`](assets/js/config.js).
+Toate valorile comerciale sunt în [`public/assets/js/config.js`](public/assets/js/config.js).
 
 ### Prețuri
 
@@ -95,29 +95,29 @@ Interfața nu simulează plata cu cardul. Activarea unei metode necesită și im
 
 ## Logo oficial FR Judo
 
-Fișierul furnizat este păstrat nemodificat în `assets/images/frjudo/fr-judo-logo-original.png` și este folosit în header cu `object-fit: contain`. Pentru backnumber se folosește `assets/images/frjudo/fr-judo-emblem.png`, o decupare nemodificată cromatic a emblemei circulare din sursa originală. Niciuna dintre variante nu este generată sau redesenată de AI.
+Fișierul furnizat este păstrat nemodificat în `public/assets/images/frjudo/fr-judo-logo-original.png` și este folosit în header cu `object-fit: contain`. Pentru backnumber se folosește `public/assets/images/frjudo/fr-judo-logo-transparent.png`, derivat din fișierul complet numai prin eliminarea fundalului alb, fără decupare, redesenare sau generare AI.
 
 ## Backnumber renderer
 
-Componenta centrală este `assets/js/backnumber-renderer.js`. Același renderer este folosit de configuratorul live, comparația de dimensiuni, coș, lista de club și recapitularea checkout. Sportivul apare pe un singur rând în panoul albastru; `fitAthleteName()` măsoară lățimea randată și micșorează fontul până când numele încape complet. `ResizeObserver` repetă calculul la redimensionare.
+Componenta centrală este `public/assets/js/backnumber-renderer.js`. Același renderer este folosit de configuratorul live, comparația de dimensiuni, coș, lista de club și recapitularea checkout. Sportivul apare pe un singur rând în panoul albastru; `fitAthleteName()` măsoară lățimea randată și micșorează fontul până când numele încape complet. `ResizeObserver` repetă calculul la redimensionare.
 
-`assets/js/qr-code.js` generează local un QR Model 2, cu corecție L, fără API extern. Payload-ul determinist are forma `NSPORT|FRJ|NAME=POPESCU|COUNTRY=ROU|SIZE=30x30`. Același produs produce același QR, iar schimbarea numelui, țării sau dimensiunii produce alt payload și altă matrice. QR-ul este exclusiv un identificator al personalizării; nu reprezintă certificare sau verificare într-o bază de date oficială.
+`public/assets/js/qr-code.js` generează local un QR Model 2, cu corecție L, fără API extern. Payload-ul determinist are forma `NSPORT|FRJ|NAME=POPESCU|COUNTRY=ROU|SIZE=30x30`. Același produs produce același QR, iar schimbarea numelui, țării sau dimensiunii produce alt payload și altă matrice. QR-ul este exclusiv un identificator al personalizării; nu reprezintă certificare sau verificare într-o bază de date oficială.
 
 ## Imagini
 
 Seria foto generată pentru proiect este în:
 
-- `assets/images/hero/`
-- `assets/images/story/`
-- `assets/images/product/`
+- `public/assets/images/hero/`
+- `public/assets/images/story/`
+- `public/assets/images/product/`
 
 Fișierele active `*-v4.png` păstrează bazele fotografice realiste `*-v3-base.png`, iar backnumber-ul complet este compus determinist și transformat ca un singur obiect prin `scripts/compose_backnumber_assets.py`. Compozitorul aplică perspectiva, lumina și microtextura materialului peste toate cele trei zone: nume, cod de țară și rândul inferior QR/siglă. Site-ul servește variantele WebP optimizate; hero-ul are și o variantă de 960 px prin `srcset`.
 
-Pentru înlocuire, păstrează numele fișierelor sau schimbă sursele din `index.html`. Prompturile, dimensiunile și pozițiile sunt documentate în [`IMAGE-GENERATION-PROMPTS.md`](IMAGE-GENERATION-PROMPTS.md).
+Pentru înlocuire, păstrează numele fișierelor sau schimbă sursele din `public/index.html`. Prompturile, dimensiunile și pozițiile sunt documentate în [`IMAGE-GENERATION-PROMPTS.md`](IMAGE-GENERATION-PROMPTS.md).
 
 ## Publicare GitHub → Cloudflare Workers
 
-Păstrează fluxul existent din repository-ul GitHub către Cloudflare Workers și fișierul `wrangler.jsonc` al configurației de deploy. Site-ul rămâne static, fără server sau framework suplimentar. Copia locală curentă nu conține `wrangler.jsonc`; recuperează fișierul existent din repository înainte de următorul deploy dacă lipsește și acolo.
+`wrangler.jsonc` publică exclusiv directorul `./public`, cu `not_found_handling: "404-page"`. Astfel `npx wrangler deploy` nu include metadatele Git, testele, scripturile de dezvoltare, documentația sau fișierele npm din rădăcina repository-ului.
 
 ## Domeniul nsport.ro și HTTPS
 
@@ -132,16 +132,21 @@ Păstrează fluxul existent din repository-ul GitHub către Cloudflare Workers �
 ## Structura principală
 
 ```text
-index.html
-assets/css/
-assets/js/
-assets/images/
-termeni-si-conditii.html
-politica-confidentialitate.html
-politica-cookies.html
-politica-retur.html
-livrare-plata.html
-404.html
+public/
+  index.html
+  assets/css/
+  assets/js/
+  assets/images/
+  termeni-si-conditii.html
+  politica-confidentialitate.html
+  politica-cookies.html
+  politica-retur.html
+  livrare-plata.html
+  404.html
+test/
+scripts/
+package.json
+wrangler.jsonc
 ```
 
 ## Observații de lansare
