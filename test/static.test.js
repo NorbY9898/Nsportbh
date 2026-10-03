@@ -116,6 +116,20 @@ test("fluxul de submit are blocare internă pentru trimitere dublă", () => {
   assert.match(app, /submissionInProgress = false/);
 });
 
+test("checkout-ul ascunde avertismentul Formspree și păstrează WhatsApp disponibil", () => {
+  const html = readFileSync(resolve(publicRoot, "index.html"), "utf8");
+  const app = readFileSync(resolve(publicRoot, "assets/js/app.js"), "utf8");
+  const css = readFileSync(resolve(publicRoot, "assets/css/style.css"), "utf8");
+  assert.match(html, /id="backend-notice" hidden aria-hidden="true"/);
+  assert.match(html, /id="checkout-whatsapp" type="button">Comandă prin WhatsApp/);
+  assert.doesNotMatch(html, /id="checkout-whatsapp"[^>]*hidden/);
+  assert.match(css, /\.backend-notice\[hidden\]\{display:none\}/);
+  assert.match(app, /function syncFormBackendAvailability\(\)/);
+  assert.match(app, /notice\.hidden = available/);
+  assert.match(app, /submit\.disabled = !available \|\| submissionInProgress/);
+  assert.match(app, /await submitOrder\(toBackendPayload\(order\)\)[^]*showOrderState\("success"[^]*clearCart\(\)/);
+});
+
 test("Wrangler kizárólag a public könyvtárat telepíti", () => {
   const wrangler = readFileSync(resolve(root, "wrangler.jsonc"), "utf8");
   const config = JSON.parse(wrangler);
