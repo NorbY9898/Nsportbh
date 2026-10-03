@@ -181,6 +181,7 @@ function openCheckout() {
   $("#checkout-club-name").value = $("#club-name").value;
   $("#checkout-club-contact").value = $("#club-contact").value;
   toggleClubCheckout();
+  syncFormBackendAvailability();
   closeCart();
   $("#checkout-dialog").showModal();
 }
@@ -201,6 +202,16 @@ function toggleClubCheckout() {
   const enabled = $("#checkout-club-order").checked;
   $("#checkout-club-fields").hidden = !enabled;
   $$("input", $("#checkout-club-fields")).forEach((input) => input.required = enabled);
+}
+
+function syncFormBackendAvailability() {
+  const available = isFormBackendConfigured();
+  const notice = $("#backend-notice");
+  const submit = $("#submit-order");
+  notice.hidden = available;
+  notice.setAttribute("aria-hidden", String(available));
+  submit.disabled = !available || submissionInProgress;
+  return available;
 }
 
 function showOrderState(kind, order, message) {
@@ -232,6 +243,10 @@ async function handleSubmit(event) {
   const validation = validateCheckout(order);
   if (!validation.valid) { toast(validation.errors[0], "error"); const invalid = form.querySelector(":invalid"); invalid?.focus(); return; }
   if (order.honeypot) return;
+  if (!syncFormBackendAvailability()) {
+    showOrderState("error", order, "Comanda prin formular este temporar indisponibilă.");
+    return;
+  }
   const button = $("#submit-order");
   if (button.disabled) return;
   submissionInProgress = true;
@@ -244,7 +259,8 @@ async function handleSubmit(event) {
     showOrderState("error", order, error.message || "A apărut o eroare de rețea.");
   } finally {
     submissionInProgress = false;
-    button.disabled = false; button.classList.remove("is-loading"); button.querySelector("span").textContent = "Trimite comanda";
+    button.classList.remove("is-loading"); button.querySelector("span").textContent = "Trimite comanda";
+    syncFormBackendAvailability();
   }
 }
 
@@ -314,7 +330,7 @@ function init() {
   $("#open-checkout").addEventListener("click", openCheckout); $("#close-checkout").addEventListener("click", () => $("#checkout-dialog").close());
   $("#billing-type").addEventListener("change", toggleBilling); $("#billing-same").addEventListener("change", toggleBillingAddress); $("#checkout-club-order").addEventListener("change", toggleClubCheckout);
   $("#checkout-form").addEventListener("submit", handleSubmit); $("#checkout-whatsapp").addEventListener("click", checkoutWhatsApp);
-  $("#backend-notice").hidden = isFormBackendConfigured();
+  syncFormBackendAvailability();
   $("#contact-email").href = `mailto:${STORE_CONFIG.orderEmail}`; $("#contact-email").textContent = STORE_CONFIG.orderEmail;
   $$("[data-phone]").forEach((node) => node.textContent = STORE_CONFIG.phoneDisplay);
   $$("[data-whatsapp]").forEach((node) => { node.href = `https://wa.me/${STORE_CONFIG.whatsappInternational}`; });
