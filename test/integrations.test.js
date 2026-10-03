@@ -11,6 +11,14 @@ test("Formspree este configurat cu endpoint-ul furnizat", () => {
   assert.equal(isFormBackendConfigured(), true);
 });
 
+test("detecția Formspree respinge numai configurațiile lipsă, invalide sau dezactivate", () => {
+  assert.equal(isFormBackendConfigured({ provider: "formspree", endpoint: "https://formspree.io/f/xyezarzg", configured: true }), true);
+  assert.equal(isFormBackendConfigured({ provider: "formspree", endpoint: "", configured: true }), false);
+  assert.equal(isFormBackendConfigured({ provider: "formspree", endpoint: "https://example.com/f/xyezarzg", configured: true }), false);
+  assert.equal(isFormBackendConfigured({ provider: "formspree", endpoint: "https://formspree.io/f/xyezarzg", configured: false }), false);
+  assert.equal(isFormBackendConfigured({ provider: "other", endpoint: "https://formspree.io/f/xyezarzg", configured: true }), false);
+});
+
 test("trimite POST real către endpoint și rezolvă numai la răspuns pozitiv", async () => {
   const originalFetch = globalThis.fetch;
   let request;
