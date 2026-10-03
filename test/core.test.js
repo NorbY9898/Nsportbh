@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { normalizeAthleteName, validateProduct, createProduct } from "../assets/js/product.js";
 import { generateOrderId, validateCheckout, toBackendPayload } from "../assets/js/checkout.js";
+import { buildQrPayload, createQrMatrix } from "../assets/js/qr-code.js";
 
 test("normalizează nume românești și internaționale", () => {
   assert.equal(normalizeAthleteName("  Șerban-Ionuț  "), "ȘERBAN-IONUȚ ");
@@ -35,6 +36,19 @@ test("creează produs fără preț inventat", () => {
   assert.equal(product.sizeLabel, "35 × 35 cm");
   assert.equal(product.unitPrice, null);
   assert.equal(product.subtotal, null);
+  assert.equal(product.qrData, "NSPORT|FRJ|NAME=MARIN|COUNTRY=ROU|SIZE=35x35");
+});
+
+test("QR-ul este determinist și se schimbă odată cu personalizarea", () => {
+  const first = buildQrPayload({ athleteName: "POPESCU", countryCode: "ROU", size: "30 × 30 cm" });
+  const same = buildQrPayload({ athleteName: "POPESCU", countryCode: "ROU", size: "30x30" });
+  const changed = buildQrPayload({ athleteName: "POPESCU", countryCode: "HUN", size: "30x30" });
+  assert.equal(first, "NSPORT|FRJ|NAME=POPESCU|COUNTRY=ROU|SIZE=30x30");
+  assert.equal(first, same);
+  assert.notEqual(first, changed);
+  assert.deepEqual(createQrMatrix(first), createQrMatrix(same));
+  assert.notDeepEqual(createQrMatrix(first), createQrMatrix(changed));
+  assert.equal(createQrMatrix(first).length, 29);
 });
 
 test("generează referință în formatul cerut", () => {
@@ -69,6 +83,8 @@ test("payload-ul include câmpurile de comandă și nu inventează prețuri", ()
   assert.equal(payload.order_id, baseOrder.orderId);
   assert.equal(payload.unit_price, "Preț la cerere");
   assert.equal(payload.terms_accepted, "DA");
+  assert.equal(payload.qr_payload, "NSPORT|FRJ|NAME=POPESCU|COUNTRY=ROU|SIZE=30x30");
+  assert.equal(payload.items[0].qr_payload, payload.qr_payload);
   assert.match(payload._subject, /NSJ-20261002-A7K4/);
 });
 
@@ -97,6 +113,7 @@ test("payload-ul de club include toate datele tuturor sportivilor", () => {
   assert.deepEqual(payload.athletes.map((athlete) => athlete.name), ["POPESCU", "KOVÁCS"]);
   assert.equal(payload.athletes[1].size, "35 × 35 cm");
   assert.equal(payload.athletes[1].unit_price, 45);
+  assert.match(payload.athletes[1].qr_payload, /NAME=KOVÁCS\|COUNTRY=HUN\|SIZE=35x35/);
   assert.equal(payload.notes, "Livrare după confirmare.");
   assert.match(payload.message, /POPESCU/);
   assert.match(payload.message, /KOVÁCS/);

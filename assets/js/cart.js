@@ -1,4 +1,5 @@
 import { PRODUCT_CONFIG } from "./config.js";
+import { buildQrPayload } from "./qr-code.js";
 
 const STORAGE_KEY = "nsport-judo-cart-v1";
 let items = [];
@@ -11,6 +12,7 @@ function normalizeCartItem(item) {
   return {
     ...item,
     sizeLabel: sizeConfig.label,
+    qrData: buildQrPayload({ athleteName: item.athleteName, countryCode: item.countryCode, size: item.size }),
     quantity,
     unitPrice: sizeConfig.price,
     subtotal: Number.isFinite(sizeConfig.price) ? sizeConfig.price * quantity : null

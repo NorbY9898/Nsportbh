@@ -90,7 +90,7 @@ function renderCart(items) {
     const details = document.createElement("div");
     details.className = "cart-item__summary";
     details.append(
-      createBacknumberElement({ athleteName: item.athleteName, countryCode: item.countryCode, size: item.sizeLabel }, "backnumber-visual--mini"),
+      createBacknumberElement({ athleteName: item.athleteName, countryCode: item.countryCode, size: item.size, qrData: item.qrData }, "backnumber-visual--mini"),
       text("strong", item.athleteName),
       text("span", `${item.country} / ${item.countryCode}`, "muted"),
       text("span", `${item.sizeLabel} · ${item.quantity} buc.`, "muted"),
@@ -144,7 +144,7 @@ function renderClubRoster(items) {
     const row = document.createElement("li");
     row.className = "club-roster__item";
     row.append(
-      createBacknumberElement({ athleteName: item.athleteName, countryCode: item.countryCode, size: item.sizeLabel }, "backnumber-visual--micro"),
+      createBacknumberElement({ athleteName: item.athleteName, countryCode: item.countryCode, size: item.size, qrData: item.qrData }, "backnumber-visual--micro"),
       text("span", `${index + 1}. ${item.athleteName} — ${item.countryCode} — ${item.sizeLabel} — ${item.quantity} buc.`)
     );
     list.append(row);
@@ -162,7 +162,7 @@ function renderRecap() {
     const row = document.createElement("li");
     row.className = "checkout-recap-item";
     row.append(
-      createBacknumberElement({ athleteName: item.athleteName, countryCode: item.countryCode, size: item.sizeLabel }, "backnumber-visual--micro"),
+      createBacknumberElement({ athleteName: item.athleteName, countryCode: item.countryCode, size: item.size, qrData: item.qrData }, "backnumber-visual--micro"),
       text("span", `${item.athleteName} · ${item.country} / ${item.countryCode} · ${item.sizeLabel} · ${item.quantity} buc.`)
     );
     recap.append(row);

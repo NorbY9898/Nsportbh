@@ -1,6 +1,6 @@
 # NSPORT × FR Judo — Backnumber Judo personalizat
 
-Microsite e-commerce static, mobile-first, în limba română, pregătit pentru GitHub Pages. Include configurator live, coș în `localStorage`, comenzi individuale și de club, checkout, Formspree și fallback WhatsApp.
+Microsite e-commerce static, mobile-first, în limba română, compatibil cu publicarea existentă prin GitHub și Cloudflare Workers. Include configurator live, coș în `localStorage`, comenzi individuale și de club, checkout, Formspree și fallback WhatsApp.
 
 > Site-ul este funcțional fără build. Endpoint-ul Formspree este configurat; pentru lansare mai sunt obligatorii testarea unei comenzi reale, configurarea prețurilor, datelor juridice și transportului.
 
@@ -95,11 +95,13 @@ Interfața nu simulează plata cu cardul. Activarea unei metode necesită și im
 
 ## Logo oficial FR Judo
 
-Fișierul furnizat este păstrat nemodificat în `assets/images/frjudo/fr-judo-logo-original.png` și este folosit în header cu `object-fit: contain`. Nu este un logo generat și nu este aplicat automat pe backnumber.
+Fișierul furnizat este păstrat nemodificat în `assets/images/frjudo/fr-judo-logo-original.png` și este folosit în header cu `object-fit: contain`. Pentru backnumber se folosește `assets/images/frjudo/fr-judo-emblem.png`, o decupare nemodificată cromatic a emblemei circulare din sursa originală. Niciuna dintre variante nu este generată sau redesenată de AI.
 
 ## Backnumber renderer
 
-Componenta centrală este `assets/js/backnumber-renderer.js`. Același renderer este folosit de configuratorul live, comparația de dimensiuni, coș, lista de club și recapitularea checkout. Sportivul apare cu majuscule în panoul albastru, iar codul de țară apare sub acesta pe zona albă. Nu sunt generate marcaje de certificare, QR-uri sau identificatori falși.
+Componenta centrală este `assets/js/backnumber-renderer.js`. Același renderer este folosit de configuratorul live, comparația de dimensiuni, coș, lista de club și recapitularea checkout. Sportivul apare pe un singur rând în panoul albastru; `fitAthleteName()` măsoară lățimea randată și micșorează fontul până când numele încape complet. `ResizeObserver` repetă calculul la redimensionare.
+
+`assets/js/qr-code.js` generează local un QR Model 2, cu corecție L, fără API extern. Payload-ul determinist are forma `NSPORT|FRJ|NAME=POPESCU|COUNTRY=ROU|SIZE=30x30`. Același produs produce același QR, iar schimbarea numelui, țării sau dimensiunii produce alt payload și altă matrice. QR-ul este exclusiv un identificator al personalizării; nu reprezintă certificare sau verificare într-o bază de date oficială.
 
 ## Imagini
 
@@ -109,17 +111,13 @@ Seria foto generată pentru proiect este în:
 - `assets/images/story/`
 - `assets/images/product/`
 
-Fișierele PNG sunt sursele originale generate. Site-ul servește variantele WebP optimizate (aproximativ 1,5 MB pentru întreaga serie utilizată); hero-ul are și o variantă de 960 px prin `srcset`. Pentru regenerarea compresiei, rulează `scripts/optimize_images.py` cu Pillow disponibil.
+Fișierele active `*-v4.png` păstrează bazele fotografice realiste `*-v3-base.png`, iar backnumber-ul complet este compus determinist și transformat ca un singur obiect prin `scripts/compose_backnumber_assets.py`. Compozitorul aplică perspectiva, lumina și microtextura materialului peste toate cele trei zone: nume, cod de țară și rândul inferior QR/siglă. Site-ul servește variantele WebP optimizate; hero-ul are și o variantă de 960 px prin `srcset`.
 
 Pentru înlocuire, păstrează numele fișierelor sau schimbă sursele din `index.html`. Prompturile, dimensiunile și pozițiile sunt documentate în [`IMAGE-GENERATION-PROMPTS.md`](IMAGE-GENERATION-PROMPTS.md).
 
-## Publicare pe GitHub Pages
+## Publicare GitHub → Cloudflare Workers
 
-1. Publică repository-ul pe GitHub.
-2. În **Settings → Pages**, alege **Deploy from a branch**.
-3. Selectează ramura principală și directorul `/ (root)`.
-4. Salvează și verifică adresa `https://username.github.io/repository/`.
-5. Toate căile proiectului sunt relative, deci funcționează și într-un subdirector.
+Păstrează fluxul existent din repository-ul GitHub către Cloudflare Workers și fișierul `wrangler.jsonc` al configurației de deploy. Site-ul rămâne static, fără server sau framework suplimentar. Copia locală curentă nu conține `wrangler.jsonc`; recuperează fișierul existent din repository înainte de următorul deploy dacă lipsește și acolo.
 
 ## Domeniul nsport.ro și HTTPS
 

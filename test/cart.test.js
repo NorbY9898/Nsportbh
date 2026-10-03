@@ -18,6 +18,7 @@ test("coșul persistă produse, actualizează cantități și șterge", () => {
   cart.updateCartQuantity("a", 1);
   assert.equal(cart.getCart()[0].quantity, 2);
   assert.match(memory.get("nsport-judo-cart-v1"), /POPESCU/);
+  assert.equal(cart.getCart()[0].qrData, "NSPORT|FRJ|NAME=POPESCU|COUNTRY=ROU|SIZE=30x30");
   cart.removeCartItem("a");
   assert.equal(cart.getCart().length, 0);
 });
@@ -40,6 +41,7 @@ test("migrează localStorage și elimină dimensiunile vechi fără eroare", () 
   cart.initCart();
   assert.deepEqual(cart.getCart().map((product) => product.size), ["40x40"]);
   assert.equal(cart.getCart()[0].sizeLabel, "40 × 40 cm");
+  assert.match(cart.getCart()[0].qrData, /SIZE=40x40$/);
   assert.doesNotMatch(memory.get("nsport-judo-cart-v1"), /15x15|25x25/);
   assert.equal(cart.addCartItem(item("invalid", "TEST", "25x25")), false);
   cart.clearCart();

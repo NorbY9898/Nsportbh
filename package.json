@@ -5,6 +5,6 @@
   "type": "module",
   "scripts": {
     "test": "node --test",
-    "check": "node --check assets/js/app.js && node --check assets/js/backnumber-renderer.js && node --check assets/js/cart.js && node --check assets/js/checkout.js && node --check assets/js/form-backend.js && node --check assets/js/preview.js"
+    "check": "node --check assets/js/app.js && node --check assets/js/backnumber-renderer.js && node --check assets/js/qr-code.js && node --check assets/js/product.js && node --check assets/js/cart.js && node --check assets/js/checkout.js && node --check assets/js/form-backend.js && node --check assets/js/whatsapp-order.js && node --check assets/js/preview.js && node --check assets/js/cookies.js && node --check assets/js/animations.js && node --check scripts/export-qr-matrix.mjs"
   }
 }

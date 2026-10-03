@@ -64,6 +64,7 @@ test("mesajul WhatsApp include toți sportivii și este codat corect", () => {
   const message = buildWhatsAppMessage(order);
   assert.match(message, /POPESCU/);
   assert.match(message, /IONESCU/);
+  assert.match(message, /QR payload: NSPORT\|FRJ\|NAME=POPESCU\|COUNTRY=ROU\|SIZE=30x30/);
   assert.match(message, /Club Test/);
   assert.match(getWhatsAppUrl(order), /^https:\/\/wa\.me\/40745326270\?text=/);
 });

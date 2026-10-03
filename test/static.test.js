@@ -57,19 +57,54 @@ test("configurația și interfața folosesc exclusiv cele patru dimensiuni noi",
   assert.doesNotMatch(`${config}\n${html}`, /15x15|25x25|15 × 15|25 × 25/);
 });
 
-test("backnumber renderer-ul nu conține marcaje OFFICIAL, IJF sau QR false", () => {
+test("backnumber renderer-ul valódi helyi QR-t használ és nem tartalmaz tiltott jelölést", () => {
   const renderer = readFileSync(resolve(root, "assets/js/backnumber-renderer.js"), "utf8");
+  const qr = readFileSync(resolve(root, "assets/js/qr-code.js"), "utf8");
   const html = readFileSync(resolve(root, "index.html"), "utf8");
-  assert.doesNotMatch(`${renderer}\n${html}`, /OFFICIAL|\bIJF\b|QR[- ]?code/i);
+  assert.doesNotMatch(renderer, /OFFICIAL|\bIJF\b|fake certification/i);
   assert.match(renderer, /backnumber-visual__name/);
   assert.match(renderer, /backnumber-visual__code/);
+  assert.match(renderer, /backnumber-visual__qr/);
+  assert.match(renderer, /backnumber-visual__logo/);
+  assert.match(qr, /createQrMatrix/);
+  assert.doesNotMatch(qr, /https?:\/\//);
 });
 
 test("logo-ul oficial FR Judo este folosit ca asset, nu ca text în header", () => {
   const html = readFileSync(resolve(root, "index.html"), "utf8");
   assert.equal(existsSync(resolve(root, "assets/images/frjudo/fr-judo-logo-original.png")), true);
+  assert.equal(existsSync(resolve(root, "assets/images/frjudo/fr-judo-logo-transparent.png")), true);
   assert.match(html, /brand__partner-logo/);
   assert.doesNotMatch(html, /<span class="brand__partner">FR JUDO<\/span>/);
+});
+
+test("az aktív promóciós képek a háromzónás, textúrázott v4 változatokat használják", () => {
+  const html = readFileSync(resolve(root, "index.html"), "utf8");
+  for (const image of ["hero-judoka-popescu-v4", "backnumber-studio-v4", "detaliu-backnumber-v4", "judogi-alb-v4", "judogi-albastru-v4", "spre-tatami-v4", "actiune-judo-v4"]) {
+    assert.match(html, new RegExp(image));
+  }
+  assert.doesNotMatch(html, /(?:hero-judoka-popescu|backnumber-studio|detaliu-backnumber|judogi-alb|judogi-albastru|spre-tatami|actiune-judo)-v[23](?:\.|-960)/);
+});
+
+test("a backnumber renderer külön ország- és azonosítózónát épít", () => {
+  const renderer = readFileSync(resolve(root, "assets/js/backnumber-renderer.js"), "utf8");
+  const css = readFileSync(resolve(root, "assets/css/style.css"), "utf8");
+  assert.match(renderer, /lower\.append\(code, identifiers\)/);
+  assert.match(renderer, /identifiers\.append\(qr, logo\)/);
+  assert.match(css, /backnumber-visual__lower[^}]+grid-template-rows/);
+  assert.match(css, /backnumber-visual__identifiers[^}]+justify-content:space-between/);
+  assert.match(renderer, /fr-judo-logo-transparent\.png/);
+});
+
+test("a Cloudflare Web Analytics minden publikus oldalon pontosan egyszer szerepel", () => {
+  const source = "static.cloudflareinsights.com/beacon.min.js";
+  const token = "41a65534312e43bc89acfabafcd127d8";
+  htmlFiles.forEach((file) => {
+    const html = readFileSync(resolve(root, file), "utf8");
+    assert.equal(html.split(source).length - 1, 1, `${file}: hibás analytics példányszám`);
+    assert.equal(html.split(token).length - 1, 1, `${file}: hibás token példányszám`);
+    assert.match(html, new RegExp(`${source.replaceAll(".", "\\.")}[^]*</script><!-- End Cloudflare Web Analytics -->\\s*</body>`));
+  });
 });
 
 test("fluxul de submit are blocare internă pentru trimitere dublă", () => {

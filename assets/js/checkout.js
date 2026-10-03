@@ -1,4 +1,5 @@
 import { PRODUCT_CONFIG, STORE_CONFIG, formatMoney } from "./config.js";
+import { buildQrPayload } from "./qr-code.js";
 
 const VALID_SIZE_LABELS = new Set(Object.values(PRODUCT_CONFIG.sizes).map((size) => size.label));
 
@@ -68,9 +69,14 @@ export function validateCheckout(order) {
 }
 
 const show = (value) => value || "—";
+const qrForItem = (item) => item.qrData || buildQrPayload({
+  athleteName: item.athleteName,
+  countryCode: item.countryCode,
+  size: item.size || item.sizeLabel
+});
 
 export function buildEmailBody(order) {
-  const athletes = order.items.map((item, index) => `${index + 1}. ${item.athleteName} — ${item.countryCode} — ${item.sizeLabel} — ${item.quantity} buc. — Preț unitar: ${formatMoney(item.unitPrice)} — Subtotal: ${formatMoney(item.subtotal)}`).join("\n");
+  const athletes = order.items.map((item, index) => `${index + 1}. ${item.athleteName} — ${item.countryCode} — ${item.sizeLabel} — ${item.quantity} buc. — Preț unitar: ${formatMoney(item.unitPrice)} — Subtotal: ${formatMoney(item.subtotal)}\n   QR payload: ${qrForItem(item)}`).join("\n");
   return `================================\nNSPORT × FR JUDO\nCOMANDĂ NOUĂ\n================================\n\nReferință: ${order.orderId}\nData: ${order.orderDate}\n\nPRODUS\nBacknumber Judo personalizat\n\nSPORTIVI\n${athletes}\n\n---\nPREȚ\nSubtotal: ${formatMoney(order.subtotal)}\nTransport: ${formatMoney(order.shipping)}\nTOTAL: ${formatMoney(order.total)}\n\n---\nCLIENT\nNume: ${show(order.customerName)}\nTelefon: ${show(order.customerPhone)}\nE-mail: ${show(order.customerEmail)}\n\n---\nLIVRARE\nJudeț: ${show(order.county)}\nLocalitate: ${show(order.city)}\nStradă: ${show(order.street)}\nNumăr: ${show(order.streetNumber)}\nBloc: ${show(order.building)}\nScară: ${show(order.staircase)}\nApartament: ${show(order.apartment)}\nCod poștal: ${show(order.postalCode)}\n\n---\nFACTURARE\nTip: ${order.billingType === "persoana_juridica" ? "Persoană juridică" : "Persoană fizică"}\nAceeași adresă: ${order.billingSame ? "DA" : "NU"}\nCompanie: ${show(order.companyName)}\nCUI: ${show(order.companyCui)}\nRegistrul Comerțului: ${show(order.companyTradeRegister)}\nAdresă: ${show(order.billingAddress)}\nJudeț: ${show(order.billingCounty)}\nLocalitate: ${show(order.billingCity)}\n\n---\nCLUB\nComandă club: ${order.clubOrder ? "DA" : "NU"}\nClub: ${show(order.clubName)}\nContact club: ${show(order.clubContact)}\n\nOBSERVAȚII\n${show(order.notes)}\n\n================================\nTermeni acceptați: ${order.termsAccepted ? "DA" : "NU"}\nPersonalizare confirmată: ${order.personalizationConfirmed ? "DA" : "NU"}\n================================`;
 }
 
@@ -88,6 +94,7 @@ export function toBackendPayload(order) {
     country: first.country || "",
     country_code: first.countryCode || "",
     size: first.sizeLabel || "",
+    qr_payload: first.athleteName ? qrForItem(first) : "",
     quantity: order.items.reduce((sum, item) => sum + item.quantity, 0),
     unit_price: first.unitPrice ?? "Preț la cerere",
     subtotal: order.subtotal ?? "Preț la cerere",
@@ -119,6 +126,7 @@ export function toBackendPayload(order) {
       country: item.country,
       country_code: item.countryCode,
       size: item.sizeLabel,
+      qr_payload: qrForItem(item),
       quantity: item.quantity,
       unit_price: item.unitPrice ?? "Preț la cerere",
       subtotal: item.subtotal ?? "Preț la cerere"
@@ -128,6 +136,7 @@ export function toBackendPayload(order) {
       country: item.country,
       code: item.countryCode,
       size: item.sizeLabel,
+      qr_payload: qrForItem(item),
       quantity: item.quantity,
       unit_price: item.unitPrice ?? "Preț la cerere",
       subtotal: item.subtotal ?? "Preț la cerere"

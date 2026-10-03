@@ -1,4 +1,5 @@
 import { STORE_CONFIG, formatMoney } from "./config.js";
+import { buildQrPayload } from "./qr-code.js";
 
 const line = (value) => value || "—";
 
@@ -8,6 +9,7 @@ export function buildWhatsAppMessage(order) {
     `Țara: ${item.country}`,
     `Cod: ${item.countryCode}`,
     `Dimensiune: ${item.sizeLabel}`,
+    `QR payload: ${item.qrData || buildQrPayload({ athleteName: item.athleteName, countryCode: item.countryCode, size: item.size || item.sizeLabel })}`,
     `Cantitate: ${item.quantity}`
   ].join("\n")).join("\n\n");
   return [

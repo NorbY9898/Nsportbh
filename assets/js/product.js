@@ -1,4 +1,5 @@
 import { PRODUCT_CONFIG } from "./config.js";
+import { buildQrPayload } from "./qr-code.js";
 
 export const normalizeAthleteName = (value = "") => value
   .normalize("NFC")
@@ -24,6 +25,11 @@ export function createProduct(input) {
   if (!validation.valid) throw new Error(validation.errors[0]);
   const sizeConfig = PRODUCT_CONFIG.sizes[input.size];
   const quantity = Number(input.quantity);
+  const qrData = buildQrPayload({
+    athleteName: validation.cleanName,
+    countryCode: input.countryCode,
+    size: input.size
+  });
   return {
     id: globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`,
     productName: PRODUCT_CONFIG.name,
@@ -32,6 +38,7 @@ export function createProduct(input) {
     countryCode: input.countryCode,
     size: input.size,
     sizeLabel: sizeConfig.label,
+    qrData,
     quantity,
     unitPrice: sizeConfig.price,
     subtotal: Number.isFinite(sizeConfig.price) ? sizeConfig.price * quantity : null

@@ -64,6 +64,9 @@ Nu publica magazinul ca flux comercial activ până când toate elementele oblig
 - [ ] Textul din imaginile finale verificat la mărire 100%
 - [ ] Textele comerciale aprobate
 - [ ] Nu există afirmații IJF/certificări neconfirmate
+- [ ] QR-ul se schimbă la nume, țară sau dimensiune și rămâne identic pentru aceleași date
+- [ ] QR-ul este prezentat numai ca identificator al personalizării, fără afirmații de verificare oficială
+- [ ] Emblema FR Judo din backnumber păstrează proporțiile și culorile sursei originale
 
 ## Testare funcțională
 
